@@ -6,7 +6,7 @@
 <title>Oasis Behavioural Health — Lynda Agbai, PMHNP · Online Psychiatry in Texas</title>
 <meta name="description" content="Oasis Behavioural Health — compassionate, evidence-based online psychiatric care and medication management with Lynda Chinyere Agbai, PMHNP. Anxiety, depression, ADHD, trauma, and mood disorders. Serving all of Texas.">
 <meta property="og:title" content="Oasis Behavioural Health — Online Psychiatry with Lynda Agbai, PMHNP">
-<meta property="og:description" content="A calm, safe space to be heard. Evidence-based online psychiatric care across Texas.">
+<meta property="og:description" content="A calm, safe space to be heard. Evidence-based online psychiatric care — Texas plus telehealth in Washington, New York &amp; New Mexico.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +21,9 @@
     --maxw:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.65;font-weight:300}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.65;font-weight:300;overflow-x:hidden;max-width:100%}
+  h1,h2,h3{overflow-wrap:break-word}
   img{max-width:100%;display:block}
   a{color:inherit;text-decoration:none}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
@@ -43,7 +44,7 @@
   header.nav{position:sticky;top:0;z-index:50;background:rgba(247,243,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:74px}
   .brand{display:flex;flex-direction:column;line-height:1}
-  .brand .b1{font-family:var(--script);font-size:30px;color:var(--teal)}
+  .brand .b1{font-family:var(--script);font-size:38px;color:var(--teal);line-height:.9}
   .brand .b2{font-family:var(--sans);font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dk);margin-top:-2px;padding-left:3px}
   .nav-links{display:flex;align-items:center;gap:30px}
   .nav-links a{font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:400}
@@ -179,7 +180,7 @@
     <div>
       <span class="script">a calm place to heal</span>
       <h1>Compassionate psychiatric care, from the comfort of home.</h1>
-      <p class="lede" id="heroBio">Evidence-based online psychiatry and medication management with <b id="heroName">Lynda Chinyere Agbai, PMHNP</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.</p>
+      <p class="lede" id="heroBio">Evidence-based online psychiatry and medication management with <b id="heroName">Lynda Chinyere Agbai, PMHNP</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.</p>
       <div class="hero-cta">
         <a href="#" class="btn gold" onclick="openBook();return false">Book an Appointment</a>
         <a href="#" class="btn ghost" id="callBtn" onclick="callNow();return false">Call (346) 253-3485</a>
@@ -209,7 +210,8 @@
       <div class="facts">
         <div><div class="k">Provider</div><div class="v" id="fName">Lynda Chinyere Agbai, MSN, APRN, PMHNP</div></div>
         <div><div class="k">Credentials</div><div class="v">Psychiatric Mental Health Nurse Practitioner</div></div>
-        <div><div class="k">Serving</div><div class="v">All of Texas — Online Only</div></div>
+        <div><div class="k">Serving</div><div class="v">Online — Texas &amp; Telehealth States</div></div>
+        <div><div class="k">Licensed In</div><div class="v">Texas · Washington · New York · New Mexico <span style="font-size:13px;color:var(--gold-dk)">(Telehealth)</span></div></div>
         <div><div class="k">Based In</div><div class="v">Richmond &amp; Austin, Texas</div></div>
         <div><div class="k">Texas License</div><div class="v">#1231255</div></div>
         <div><div class="k">Ages</div><div class="v">Adults &amp; Adolescents</div></div>
@@ -271,7 +273,7 @@
       <a href="#" id="footPhone" onclick="callNow();return false">📞 (346) 253-3485</a><br>
       <a href="#" onclick="openBook();return false">✦ Book an appointment</a><br>
       <a id="footEmail" href="mailto:hello@oasisbehaviouralhealth.com">✉ hello@oasisbehaviouralhealth.com</a><br>
-      <span style="font-size:14px;color:#aebfb6">Online across Texas · Richmond &amp; Austin</span>
+      <span style="font-size:14px;color:#aebfb6">Online · Licensed in Texas, Washington, New York &amp; New Mexico</span>
     </div>
     <div>
       <h4>Explore</h4>
@@ -340,7 +342,7 @@
     ptLink:'https://www.psychologytoday.com/profile/1760882',
     paymentLink:'',            /* paste a Stripe/Square Payment Link to receive card payments */
     bookingEndpoint:'',        /* FormSubmit/Web3Forms endpoint to receive booking emails */
-    bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.',
+    bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving Texas, with telehealth across Washington, New York and New Mexico.',
     insurers:['Aetna','Ascension SmartHealth','BlueCross BlueShield','Carelon Behavioral Health','Cigna / Evernorth','Out-of-Network (superbill)']
   };
   var CFG=Object.assign({},DEFAULTS);
@@ -381,7 +383,7 @@
   /* ---------- Apply config ---------- */
   function applyCfg(){
     document.getElementById('heroName').textContent=CFG.providerName;
-    document.getElementById('heroBio').innerHTML='Evidence-based online psychiatry and medication management with <b id="heroName">'+esc(CFG.providerName)+'</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.';
+    document.getElementById('heroBio').innerHTML='Evidence-based online psychiatry and medication management with <b id="heroName">'+esc(CFG.providerName)+'</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.';
     document.getElementById('fName').textContent=CFG.providerName;
     document.getElementById('capName').textContent=CFG.shortName;
     document.getElementById('aboutBio').textContent=CFG.bio;
