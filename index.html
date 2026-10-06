@@ -155,6 +155,7 @@
   }
   @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}section{padding:62px 0}}
 
+  .emblem{flex:none;border-radius:50%;filter:drop-shadow(0 1px 2px rgba(20,66,95,.18))}
   /* ===== Bright blue + green theme (medical) ===== */
   .btn.gold{background:linear-gradient(135deg,#2088c9,#2ba6da);color:#fff}
   .btn.gold:hover{background:linear-gradient(135deg,#176ba6,#1f8fc5);color:#fff}
@@ -196,11 +197,13 @@
 </style>
 </head>
 <body>
+<!-- Oasis logo mark (reusable) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="oasis-logo" viewBox="0 0 100 100"><defs><clipPath id="oac"><circle cx="50" cy="52" r="42"/></clipPath><linearGradient id="osun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffdc82"/><stop offset="1" stop-color="#f4a63a"/></linearGradient><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef7ff"/><stop offset="1" stop-color="#d8edff"/></linearGradient></defs><circle cx="50" cy="52" r="44" fill="#fff"/><g clip-path="url(#oac)"><rect width="100" height="100" fill="url(#osky)"/><g stroke="#f6b84a" stroke-width="2.6" stroke-linecap="round"><line x1="50" y1="34" x2="50" y2="26"/><line x1="35" y1="39" x2="30" y2="34"/><line x1="65" y1="39" x2="70" y2="34"/><line x1="30" y1="52" x2="23" y2="52"/><line x1="70" y1="52" x2="77" y2="52"/></g><circle cx="50" cy="58" r="16" fill="url(#osun)"/><path d="M0 66 Q25 60 50 66 T100 66 V100 H0 Z" fill="#2a97d4"/><path d="M0 74 Q25 68 50 74 T100 74 V100 H0 Z" fill="#1a73b5"/><g stroke="#eef7ff" stroke-width="1.5" opacity=".65" fill="none"><path d="M8 71 Q20 68 32 71"/><path d="M62 71 Q74 68 86 71"/></g></g><path d="M50 22 C43 11 32 12 28 18 C39 20 45 25 50 31 Z" fill="#46a046"/><path d="M50 22 C57 11 68 12 72 18 C61 20 55 25 50 31 Z" fill="#69c05a"/><path d="M50 26 C48 15 50 8 52 5 C55 13 53 20 50 31 Z" fill="#368a36"/><circle cx="50" cy="52" r="42" fill="none" stroke="#1a73b5" stroke-width="2.4"/></symbol></svg>
 
 <!-- NAV -->
 <header class="nav">
   <div class="wrap nav-in">
-    <a href="#top" class="brand"><span class="b1">Oasis</span><span class="b2">Behavioural Health</span></a>
+    <a href="#top" class="brand" style="flex-direction:row;align-items:center;gap:11px"><svg class="emblem" width="50" height="50"><use href="#oasis-logo"/></svg><span style="display:flex;flex-direction:column;line-height:.86"><span class="b1">Oasis</span><span class="b2">Behavioural Health</span></span></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#services">Services</a>
@@ -302,7 +305,7 @@
 <footer id="contact">
   <div class="wrap fgrid">
     <div class="fbrand">
-      <div class="b1">Oasis Behavioural Health</div>
+      <div style="display:flex;align-items:center;gap:12px"><svg class="emblem" width="48" height="48"><use href="#oasis-logo"/></svg><div class="b1" style="margin:0">Oasis Behavioural Health</div></div>
       <p style="margin-top:10px;font-size:14px;color:#aebfb6;max-width:26em">Compassionate, evidence-based online psychiatry with Lynda Agbai, PMHNP. A calm place to heal — serving all of Texas.</p>
       <a class="pt-badge" style="margin-top:18px" href="https://www.psychologytoday.com/profile/1760882" target="_blank" rel="noopener">✦ View our <b style="color:var(--gold)">Psychology Today</b> profile ↗</a>
     </div>

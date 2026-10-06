@@ -9,19 +9,19 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2315433d'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23bd9a5f' font-family='Georgia,serif' font-style='italic'%3EO%3C/text%3E%3C/svg%3E">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  :root{--bg:#f7f3ec;--paper:#fffdf9;--ink:#23312e;--muted:#5c6b64;--teal:#15433d;--teal2:#1d5a52;--gold:#bd9a5f;--gold-dk:#9c7e42;--sage:#e6efe8;--line:#e4ddcf;
+  :root{--bg:#f5faff;--paper:#ffffff;--ink:#14425f;--muted:#5a7488;--teal:#1a73b5;--teal2:#2a97d4;--gold:#46a046;--gold-dk:#3a8a3a;--sage:#e7f3fc;--line:#d9e8f3;
     --script:'Great Vibes',cursive;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',Arial,sans-serif;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-weight:300}
   h1,h2,h3{font-family:var(--serif);font-weight:600}
   .script{font-family:var(--script)}
   .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:11px 20px;border-radius:2px;border:1px solid transparent;cursor:pointer;transition:.2s}
-  .btn.gold{background:var(--gold);color:#241c08}.btn.gold:hover{background:var(--gold-dk);color:#fff}
+  .btn.gold{background:linear-gradient(135deg,#2088c9,#2ba6da);color:#fff}.btn.gold:hover{background:linear-gradient(135deg,#176ba6,#1f8fc5);color:#fff}
   .btn.teal{background:var(--teal);color:#fff}.btn.teal:hover{background:var(--teal2)}
-  .btn.ghost{background:#fff;border-color:var(--line);color:var(--teal)}.btn.ghost:hover{border-color:var(--gold)}
+  .btn.ghost{background:#fff;border-color:var(--line);color:var(--teal)}.btn.ghost:hover{border-color:var(--teal)}
   .btn.sm{padding:7px 13px;font-size:11.5px}
   /* gate */
-  .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#17463f,#0f332e);padding:20px}
+  .gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#1a73b5,#2a97d4);padding:20px}
   .gate .card{background:var(--paper);border-radius:8px;padding:40px;max-width:380px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.3)}
   .gate .b1{font-family:var(--script);font-size:40px;color:var(--teal)}
   .gate .b2{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:22px}
@@ -68,10 +68,13 @@
 </style>
 </head>
 <body>
+<!-- Oasis logo mark (reusable) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="oasis-logo" viewBox="0 0 100 100"><defs><clipPath id="oac"><circle cx="50" cy="52" r="42"/></clipPath><linearGradient id="osun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffdc82"/><stop offset="1" stop-color="#f4a63a"/></linearGradient><linearGradient id="osky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef7ff"/><stop offset="1" stop-color="#d8edff"/></linearGradient></defs><circle cx="50" cy="52" r="44" fill="#fff"/><g clip-path="url(#oac)"><rect width="100" height="100" fill="url(#osky)"/><g stroke="#f6b84a" stroke-width="2.6" stroke-linecap="round"><line x1="50" y1="34" x2="50" y2="26"/><line x1="35" y1="39" x2="30" y2="34"/><line x1="65" y1="39" x2="70" y2="34"/><line x1="30" y1="52" x2="23" y2="52"/><line x1="70" y1="52" x2="77" y2="52"/></g><circle cx="50" cy="58" r="16" fill="url(#osun)"/><path d="M0 66 Q25 60 50 66 T100 66 V100 H0 Z" fill="#2a97d4"/><path d="M0 74 Q25 68 50 74 T100 74 V100 H0 Z" fill="#1a73b5"/><g stroke="#eef7ff" stroke-width="1.5" opacity=".65" fill="none"><path d="M8 71 Q20 68 32 71"/><path d="M62 71 Q74 68 86 71"/></g></g><path d="M50 22 C43 11 32 12 28 18 C39 20 45 25 50 31 Z" fill="#46a046"/><path d="M50 22 C57 11 68 12 72 18 C61 20 55 25 50 31 Z" fill="#69c05a"/><path d="M50 26 C48 15 50 8 52 5 C55 13 53 20 50 31 Z" fill="#368a36"/><circle cx="50" cy="52" r="42" fill="none" stroke="#1a73b5" stroke-width="2.4"/></symbol></svg>
 
 <!-- LOGIN GATE -->
 <div class="gate" id="gate">
   <div class="card">
+    <svg width="60" height="60" style="margin:0 auto 6px;display:block"><use href="#oasis-logo"/></svg>
     <div class="b1">Oasis</div><div class="b2">Admin Console</div>
     <input id="pass" type="password" placeholder="Passcode" onkeydown="if(event.key==='Enter')login()">
     <button class="btn gold" style="width:100%;justify-content:center" onclick="login()">Enter</button>
@@ -82,7 +85,7 @@
 <!-- APP -->
 <div id="app" style="display:none">
   <div class="top">
-    <span class="b1">Oasis Admin</span>
+    <span style="display:flex;align-items:center;gap:9px"><svg width="34" height="34" style="background:#fff;border-radius:50%"><use href="#oasis-logo"/></svg><span class="b1">Oasis Admin</span></span>
     <div><a class="btn ghost sm" href="index.html" target="_blank">View site ↗</a> <button class="btn ghost sm" onclick="logout()">Lock</button></div>
   </div>
   <div class="tabs">
@@ -212,16 +215,16 @@
 
   /* ---- flyers ---- */
   var FLYERS=[
-    {bg:'linear-gradient(160deg,#17463f,#0f332e)',ic:'🌿',script:'a calm place to heal',h:'Now Accepting New Clients',p:'Compassionate online psychiatry for anxiety, depression, ADHD, trauma & mood.',cta:'Book Today'},
-    {bg:'linear-gradient(160deg,#1d5a52,#123a34)',ic:'💻',script:'from anywhere in Texas',h:'Online Psychiatry, Statewide',p:'Meet from your phone or laptop — private, secure, and convenient.',cta:'Start Online'},
-    {bg:'linear-gradient(160deg,#15433d,#0f332e)',ic:'🏥',script:'simple & covered',h:'We Accept Insurance',p:'Aetna · BCBS · Cigna/Evernorth · Carelon · Ascension — and more.',cta:'Verify Benefits'},
-    {bg:'linear-gradient(160deg,#17463f,#143b35)',ic:'💊',script:'personalized care',h:'Medication Management',p:'Thoughtful, collaborative psychiatric care — never one-size-fits-all.',cta:'Learn More'},
-    {bg:'linear-gradient(160deg,#1d5a52,#0f332e)',ic:'🌊',script:'you deserve calm',h:'Anxiety & Depression Care',p:'Evidence-based treatment to help you feel like yourself again.',cta:'Reach Out'},
-    {bg:'linear-gradient(160deg,#15433d,#123a34)',ic:'⚡',script:'focus & clarity',h:'Adult & Teen ADHD',p:'Accurate evaluation and treatment for focus, follow-through & calm.',cta:'Book an Eval'},
-    {bg:'linear-gradient(160deg,#17463f,#0f332e)',ic:'✨',script:'care in minutes',h:'Book in Just a Few Taps',p:'New-client appointments are quick and easy to schedule online.',cta:'Book Now'},
-    {bg:'linear-gradient(160deg,#1d5a52,#123a34)',ic:'💛',script:'care for everyone',h:'Sliding Scale Available',p:'Private-pay options and HSA/FSA accepted. Care that fits your life.',cta:'Ask Us How'},
-    {bg:'linear-gradient(160deg,#15433d,#0f332e)',ic:'🕊️',script:'mental health is health',h:'It’s Okay to Ask for Help',p:'Reaching out is strength. A warm, nonjudgmental space is waiting.',cta:'Start Today'},
-    {bg:'linear-gradient(160deg,#17463f,#143b35)',ic:'👩🏽‍⚕️',script:'meet your provider',h:'Lynda Agbai, PMHNP',p:'Board-certified Psychiatric Mental Health Nurse Practitioner.',cta:'View Profile'}
+    {bg:'linear-gradient(160deg,#1a73b5,#0f4e78)',ic:'🌿',script:'a calm place to heal',h:'Now Accepting New Clients',p:'Compassionate online psychiatry for anxiety, depression, ADHD, trauma & mood.',cta:'Book Today'},
+    {bg:'linear-gradient(160deg,#2a97d4,#176ba6)',ic:'💻',script:'from anywhere in Texas',h:'Online Psychiatry, Statewide',p:'Meet from your phone or laptop — private, secure, and convenient.',cta:'Start Online'},
+    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🏥',script:'simple & covered',h:'We Accept Insurance',p:'Aetna · BCBS · Cigna/Evernorth · Carelon · Ascension — and more.',cta:'Verify Benefits'},
+    {bg:'linear-gradient(160deg,#1f88c5,#15558a)',ic:'💊',script:'personalized care',h:'Medication Management',p:'Thoughtful, collaborative psychiatric care — never one-size-fits-all.',cta:'Learn More'},
+    {bg:'linear-gradient(160deg,#2a97d4,#1a73b5)',ic:'🌊',script:'you deserve calm',h:'Anxiety & Depression Care',p:'Evidence-based treatment to help you feel like yourself again.',cta:'Reach Out'},
+    {bg:'linear-gradient(160deg,#2f8fcf,#1a73b5)',ic:'⚡',script:'focus & clarity',h:'Adult & Teen ADHD',p:'Accurate evaluation and treatment for focus, follow-through & calm.',cta:'Book an Eval'},
+    {bg:'linear-gradient(160deg,#1a73b5,#0f4e78)',ic:'✨',script:'care in minutes',h:'Book in Just a Few Taps',p:'New-client appointments are quick and easy to schedule online.',cta:'Book Now'},
+    {bg:'linear-gradient(160deg,#2a97d4,#176ba6)',ic:'💛',script:'care for everyone',h:'Sliding Scale Available',p:'Private-pay options and HSA/FSA accepted. Care that fits your life.',cta:'Ask Us How'},
+    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🕊️',script:'mental health is health',h:'It’s Okay to Ask for Help',p:'Reaching out is strength. A warm, nonjudgmental space is waiting.',cta:'Start Today'},
+    {bg:'linear-gradient(160deg,#1f88c5,#15558a)',ic:'👩🏽‍⚕️',script:'meet your provider',h:'Lynda Agbai, PMHNP',p:'Board-certified Psychiatric Mental Health Nurse Practitioner.',cta:'View Profile'}
   ];
   function renderFlyers(){var c=getCfg();
     document.getElementById('flyerGrid').innerHTML=FLYERS.map(function(f,i){
