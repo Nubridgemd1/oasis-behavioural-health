@@ -14,9 +14,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2315433d'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23bd9a5f' font-family='Georgia,serif' font-style='italic'%3EO%3C/text%3E%3C/svg%3E">
 <style>
   :root{
-    --bg:#f7f3ec; --paper:#fffdf9; --ink:#23312e; --muted:#5c6b64;
-    --teal:#15433d; --teal2:#1d5a52; --gold:#bd9a5f; --gold-dk:#9c7e42;
-    --sage:#e6efe8; --line:#e4ddcf;
+    --bg:#f5faff; --paper:#ffffff; --ink:#14425f; --muted:#5a7488;
+    --teal:#1a73b5; --teal2:#2a97d4; --gold:#46a046; --gold-dk:#3a8a3a;
+    --sage:#e7f3fc; --line:#d9e8f3;
     --script:'Great Vibes',cursive; --serif:'Cormorant Garamond',Georgia,serif; --sans:'Jost',Arial,sans-serif;
     --maxw:1120px;
   }
@@ -41,7 +41,7 @@
   section{padding:88px 0}
   .center{text-align:center}
   /* NAV */
-  header.nav{position:sticky;top:0;z-index:50;background:rgba(247,243,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:74px}
   .brand{display:flex;flex-direction:column;line-height:1}
   .brand .b1{font-family:var(--script);font-size:48px;color:var(--teal);line-height:.85;-webkit-text-stroke:.7px var(--teal);text-stroke:.7px var(--teal)}
@@ -154,6 +154,45 @@
     footer .fgrid{grid-template-columns:1fr}
   }
   @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}section{padding:62px 0}}
+
+  /* ===== Bright blue + green theme (medical) ===== */
+  .btn.gold{background:linear-gradient(135deg,#2088c9,#2ba6da);color:#fff}
+  .btn.gold:hover{background:linear-gradient(135deg,#176ba6,#1f8fc5);color:#fff}
+  .btn.ghost{border-color:var(--teal);color:var(--teal)}
+  .btn.ghost:hover{background:var(--teal);color:#fff}
+  /* Hero → bright, airy */
+  .hero{background:linear-gradient(155deg,#e8f4fc 0%,#f4faff 52%,#eaf8f0 100%)!important;color:var(--ink)!important}
+  .hero:after{background:radial-gradient(circle at 84% 12%,rgba(70,160,70,.12),transparent 44%)!important}
+  .hero .script{color:var(--gold-dk)!important}
+  .hero h1{color:var(--ink)!important}
+  .hero p.lede{color:var(--muted)!important}
+  .pt-badge{background:#fff!important;border:1px solid var(--line)!important;color:var(--muted)!important}
+  .pt-badge:hover{background:var(--sage)!important}
+  .pt-badge b{color:var(--teal)!important}
+  .portrait .frame{border:1px solid var(--line)!important;background:#fff!important;box-shadow:0 16px 38px rgba(20,66,95,.14)}
+  .portrait .cap{background:var(--teal)!important;color:#fff!important}
+  /* Insurance & Payment → bright */
+  .pay-bg{background:linear-gradient(160deg,#e9f4fc,#eaf8f0)!important;color:var(--ink)!important}
+  .pay-bg .eyebrow{color:var(--gold-dk)!important}
+  .pay-bg h2{color:var(--ink)!important}
+  .pay-bg p,.pay-bg .panel p{color:var(--muted)!important}
+  .panel{background:#fff!important;border:1px solid var(--line)!important;box-shadow:0 10px 26px rgba(20,66,95,.08)}
+  .panel h3{color:var(--teal)!important}
+  .ins-list span{background:var(--sage)!important;border:1px solid var(--line)!important;color:var(--teal)!important}
+  .cards-row span{color:var(--muted)!important;border:1px solid var(--line)!important}
+  /* Blog card header → blue→green */
+  .post .ph{background:linear-gradient(135deg,var(--teal),var(--gold))!important;color:#fff}
+  .chip{background:var(--sage);color:var(--teal);border-color:var(--line)}
+  /* Footer → bright (light) */
+  footer{background:#eef5fb!important;color:#51697c!important;border-top:1px solid var(--line)}
+  footer h4{color:var(--teal)!important}
+  footer a{color:#51697c!important}
+  footer a:hover{color:var(--teal)!important}
+  .fbrand .b1{color:var(--teal)!important}
+  .fbrand p,footer .fbrand span{color:#6a8092!important}
+  .copyright{border-top:1px solid var(--line)!important;color:#8198a8!important}
+  .copyright a{color:#8198a8!important}
+  .fbrand .pt-badge{background:#fff!important}
 </style>
 </head>
 <body>
