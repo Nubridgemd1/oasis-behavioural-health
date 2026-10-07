@@ -88,10 +88,12 @@
   /* SPECIALTIES (photo tiles) */
   .subhead{margin:50px 0 6px;font-family:var(--serif);font-size:25px;color:var(--teal);text-align:center}
   .subnote{color:var(--muted);font-size:14.5px;text-align:center;margin-bottom:24px}
-  .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;text-align:left}
-  .spec{background:var(--bg);border:1px solid var(--line);border-radius:7px;overflow:hidden;transition:.2s}
+  .spec-reel{margin-top:10px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;-webkit-mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+  .spec-reel::-webkit-scrollbar{display:none}
+  .spec-track{display:flex;gap:16px;width:max-content;padding:8px 2px 12px}
+  .spec{flex:0 0 228px;width:228px;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:7px;overflow:hidden;transition:.2s}
   .spec:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 20px rgba(21,67,61,.09)}
-  .spec img{width:100%;height:118px;object-fit:cover;display:block;background:var(--sage)}
+  .spec img{width:100%;height:150px;object-fit:cover;display:block;background:var(--sage)}
   .spec span{display:block;padding:11px 13px;font-size:14px;color:var(--teal);font-weight:600}
   /* INSURANCE / PAY */
   .pay-bg{background:linear-gradient(160deg,#17463f,#123a34);color:#eef3ee}
@@ -278,8 +280,8 @@
     <h2 class="title">Services &amp; Specialties</h2>
     <div class="grid3" style="text-align:left" id="svcGrid"></div>
     <h3 class="subhead">Specialties we treat</h3>
-    <p class="subnote">Compassionate, evidence-based care across the concerns that bring people to Oasis.</p>
-    <div class="spec-grid" id="specGrid"></div>
+    <p class="subnote">Compassionate, evidence-based care across the concerns that bring people to Oasis. <span style="color:var(--gold-dk)">Swipe the reel →</span></p>
+    <div class="spec-reel"><div class="spec-track" id="specGrid"></div></div>
   </div>
 </section>
 
@@ -458,7 +460,20 @@
 
   /* ---------- Render ---------- */
   document.getElementById('svcGrid').innerHTML=SERVICES.map(function(s){return '<div class="svc"><img class="svc-img" loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,620,420)+'"><div class="svc-body"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div></div>';}).join('');
-  document.getElementById('specGrid').innerHTML=SPECIALTIES.map(function(s){return '<div class="spec"><img loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,420,300)+'"><span>'+s.t+'</span></div>';}).join('');
+  (function(){var t=SPECIALTIES.map(function(s){return '<div class="spec"><img loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,420,300)+'"><span>'+s.t+'</span></div>';}).join('');document.getElementById('specGrid').innerHTML=t+t;startSpecReel();})();
+  function startSpecReel(){
+    var reel=document.querySelector('.spec-reel'); if(!reel) return;
+    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var track=reel.firstElementChild, n=track.children.length/2, half=0;
+    function calc(){var el=track.children[n]; half=el?el.offsetLeft:track.scrollWidth/2;}
+    calc(); window.addEventListener('resize',calc); window.addEventListener('load',calc);
+    var paused=false;
+    reel.addEventListener('mouseenter',function(){paused=true;});
+    reel.addEventListener('mouseleave',function(){paused=false;});
+    reel.addEventListener('touchstart',function(){paused=true;},{passive:true});
+    reel.addEventListener('touchend',function(){setTimeout(function(){paused=false;},2200);});
+    (function step(){ if(!paused&&half>0){ reel.scrollLeft+=0.6; if(reel.scrollLeft>=half) reel.scrollLeft-=half; } requestAnimationFrame(step); })();
+  }
   document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
     return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
       '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
