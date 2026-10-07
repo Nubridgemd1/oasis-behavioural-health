@@ -277,9 +277,8 @@
     <h2 class="title">Insurance &amp; Payment</h2>
     <div class="pay-grid" style="text-align:left">
       <div class="panel">
-        <h3>In-Network Insurance</h3>
-        <p style="color:#d9e3dd;font-size:15px;margin-bottom:14px">We accept most major plans. Verify your benefits when you book — it only takes a moment.</p>
-        <div class="ins-list" id="insList"></div>
+        <h3>Insurance &amp; Benefits</h3>
+        <p style="color:#d9e3dd;font-size:15px;margin-bottom:14px">Tell us your insurance provider when you book and we&rsquo;ll verify your benefits before your first visit — no charge to check.</p>
       </div>
       <div class="panel">
         <h3>Private Pay &amp; Cards</h3>
@@ -349,7 +348,7 @@
           <button type="button" id="segIns" onclick="setPay('insurance')">🏥 Insurance</button>
         </div>
         <div id="insBlock" style="display:none">
-          <div class="field"><label>Insurance provider</label><select name="insurer" id="insSelect"></select></div>
+          <div class="field"><label>Insurance provider</label><input name="insurer" id="insSelect" placeholder="Your insurance provider"></div>
           <div class="field"><label>Member ID</label><input name="memberId" placeholder="Member / subscriber ID"></div>
           <p class="note">We'll verify your benefits before your first visit — no charge to check.</p>
         </div>
@@ -384,7 +383,7 @@
     paymentLink:'',            /* paste a Stripe/Square Payment Link to receive card payments */
     bookingEndpoint:'',        /* FormSubmit/Web3Forms endpoint to receive booking emails */
     bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving Texas, with telehealth across Washington, New York and New Mexico.',
-    insurers:['Aetna','Ascension SmartHealth','BlueCross BlueShield','Carelon Behavioral Health','Cigna / Evernorth','Out-of-Network (superbill)']
+    insurers:[]
   };
   var CFG=Object.assign({},DEFAULTS);
   try{var saved=JSON.parse(localStorage.getItem('oasis_cfg')||'{}');CFG=Object.assign(CFG,saved);}catch(e){}
@@ -440,14 +439,13 @@
   /* ---------- Render ---------- */
   document.getElementById('specChips').innerHTML=SPECIALTIES.map(function(s){return '<span class="chip">'+s+'</span>';}).join('');
   document.getElementById('svcGrid').innerHTML=SERVICES.map(function(s){return '<div class="svc"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div>';}).join('');
-  document.getElementById('insList').innerHTML=CFG.insurers.map(function(i){return '<span>'+esc(i)+'</span>';}).join('');
   document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
     return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
       '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
       '<div class="pf"><span class="readlink" onclick="openPost('+i+')">Read ↗</span>'+
       '<div class="share">'+shareButtons(i)+'</div></div></div></article>';
   }).join('');
-  function insuranceOptions(){document.getElementById('insSelect').innerHTML=CFG.insurers.map(function(i){return '<option>'+esc(i)+'</option>';}).join('');}
+  function insuranceOptions(){/* insurance provider is now a free-text field — no payer list to populate */}
 
   /* ---------- Sharing (all platforms) ---------- */
   function postUrl(i){return location.origin+location.pathname+'#post-'+i;}

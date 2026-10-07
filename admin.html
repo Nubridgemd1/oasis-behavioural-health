@@ -120,7 +120,6 @@
           <div class="hint">When set, &ldquo;Book &amp; Pay&rdquo; sends clients straight to this secure checkout.</div></div>
         <div class="field"><label>Booking form endpoint (optional)</label><input id="f_bookingEndpoint" placeholder="https://formsubmit.co/ajax/your@email  or  Web3Forms URL">
           <div class="hint">Receives each booking/insurance request by email. Leave blank to collect under the Bookings tab.</div></div>
-        <div class="field"><label>Insurance accepted (one per line)</label><textarea id="f_insurers" rows="5"></textarea></div>
       </div>
       <button class="btn gold" onclick="saveCfg()">Save changes</button>
       <button class="btn ghost" onclick="resetCfg()">Reset to defaults</button>
@@ -173,7 +172,7 @@
   var DEFAULTS={providerName:'Lynda Chinyere Agbai, PMHNP',shortName:'Lynda Agbai, PMHNP',phone:'(346) 253-3485',
     email:'hello@oasisbehaviouralhealth.com',ptLink:'https://www.psychologytoday.com/profile/1760882',paymentLink:'',bookingEndpoint:'',
     bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.',
-    insurers:['Aetna','Ascension SmartHealth','BlueCross BlueShield','Carelon Behavioral Health','Cigna / Evernorth','Out-of-Network (superbill)']};
+    insurers:[]};
   function getCfg(){var c=Object.assign({},DEFAULTS);try{c=Object.assign(c,JSON.parse(localStorage.getItem('oasis_cfg')||'{}'));}catch(e){}return c;}
   function passHash(){return localStorage.getItem('oasis_pass')||'oasis2026';}
 
@@ -188,12 +187,11 @@
   /* ---- update ---- */
   function loadAll(){var c=getCfg();
     ['providerName','shortName','phone','email','ptLink','paymentLink','bookingEndpoint','bio'].forEach(function(k){var el=document.getElementById('f_'+k);if(el)el.value=c[k]||'';});
-    document.getElementById('f_insurers').value=(c.insurers||[]).join('\n');
     renderKit();renderFlyers();
   }
   function saveCfg(){var c=getCfg();
     ['providerName','shortName','phone','email','ptLink','paymentLink','bookingEndpoint','bio'].forEach(function(k){c[k]=document.getElementById('f_'+k).value.trim();});
-    c.insurers=document.getElementById('f_insurers').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+    c.insurers=[];
     localStorage.setItem('oasis_cfg',JSON.stringify(c));toast('Saved — your website is updated');renderKit();renderFlyers();
   }
   function resetCfg(){if(confirm('Reset all practice details to defaults?')){localStorage.removeItem('oasis_cfg');loadAll();toast('Reset to defaults');}}
@@ -217,7 +215,7 @@
   var FLYERS=[
     {bg:'linear-gradient(160deg,#1a73b5,#0f4e78)',ic:'🌿',script:'a calm place to heal',h:'Now Accepting New Clients',p:'Compassionate online psychiatry for anxiety, depression, ADHD, trauma & mood.',cta:'Book Today'},
     {bg:'linear-gradient(160deg,#2a97d4,#176ba6)',ic:'💻',script:'from anywhere in Texas',h:'Online Psychiatry, Statewide',p:'Meet from your phone or laptop — private, secure, and convenient.',cta:'Start Online'},
-    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🏥',script:'simple & covered',h:'We Accept Insurance',p:'Aetna · BCBS · Cigna/Evernorth · Carelon · Ascension — and more.',cta:'Verify Benefits'},
+    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🏥',script:'simple & covered',h:'Insurance & Benefits',p:'Tell us your plan when you book — we&rsquo;ll verify your benefits, no charge to check.',cta:'Verify Benefits'},
     {bg:'linear-gradient(160deg,#1f88c5,#15558a)',ic:'💊',script:'personalized care',h:'Medication Management',p:'Thoughtful, collaborative psychiatric care — never one-size-fits-all.',cta:'Learn More'},
     {bg:'linear-gradient(160deg,#2a97d4,#1a73b5)',ic:'🌊',script:'you deserve calm',h:'Anxiety & Depression Care',p:'Evidence-based treatment to help you feel like yourself again.',cta:'Reach Out'},
     {bg:'linear-gradient(160deg,#2f8fcf,#1a73b5)',ic:'⚡',script:'focus & clarity',h:'Adult & Teen ADHD',p:'Accurate evaluation and treatment for focus, follow-through & calm.',cta:'Book an Eval'},
