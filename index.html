@@ -78,11 +78,21 @@
   /* SERVICES */
   .svc-bg{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
-  .svc{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:30px 26px;transition:.25s}
+  .svc{background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:0;overflow:hidden;transition:.25s}
   .svc:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 16px 30px rgba(21,67,61,.08)}
-  .svc .ic{font-size:26px;margin-bottom:12px}
-  .svc h3{font-size:22px;margin-bottom:8px;color:var(--teal)}
+  .svc-img{width:100%;height:188px;object-fit:cover;display:block;background:var(--sage)}
+  .svc-body{padding:26px 24px 28px;position:relative}
+  .svc .ic{font-size:23px;position:absolute;top:-25px;left:22px;width:50px;height:50px;line-height:50px;text-align:center;background:var(--bg);border-radius:50%;box-shadow:0 7px 16px rgba(21,67,61,.16)}
+  .svc h3{font-size:21px;margin:4px 0 8px;color:var(--teal)}
   .svc p{color:var(--muted);font-size:14.5px}
+  /* SPECIALTIES (photo tiles) */
+  .subhead{margin:50px 0 6px;font-family:var(--serif);font-size:25px;color:var(--teal);text-align:center}
+  .subnote{color:var(--muted);font-size:14.5px;text-align:center;margin-bottom:24px}
+  .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;text-align:left}
+  .spec{background:var(--bg);border:1px solid var(--line);border-radius:7px;overflow:hidden;transition:.2s}
+  .spec:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 20px rgba(21,67,61,.09)}
+  .spec img{width:100%;height:118px;object-fit:cover;display:block;background:var(--sage)}
+  .spec span{display:block;padding:11px 13px;font-size:14px;color:var(--teal);font-weight:600}
   /* INSURANCE / PAY */
   .pay-bg{background:linear-gradient(160deg,#17463f,#123a34);color:#eef3ee}
   .pay-bg .eyebrow{color:var(--gold)}
@@ -146,6 +156,7 @@
     .hero-in{grid-template-columns:1fr;gap:40px}.portrait{max-width:360px;margin:0 auto}
     .two,.pay-grid{grid-template-columns:1fr;gap:34px}
     .grid3,.blog-grid{grid-template-columns:1fr 1fr}
+    .spec-grid{grid-template-columns:repeat(3,1fr)}
     .nav-links{position:fixed;inset:74px 0 auto 0;background:var(--bg);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
     .nav-links.open{display:flex}
     .nav-links a{width:100%;padding:16px 24px;border-top:1px solid var(--line)}
@@ -153,7 +164,7 @@
     .nav-toggle{display:block}
     footer .fgrid{grid-template-columns:1fr}
   }
-  @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}section{padding:62px 0}}
+  @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr 1fr}section{padding:62px 0}}
 
   .emblem{flex:none;border-radius:50%;filter:drop-shadow(0 1px 2px rgba(20,66,95,.18))}
   /* ===== Bright blue + green theme (medical) ===== */
@@ -246,7 +257,6 @@
       <h2 class="title">You deserve to be heard, supported, and understood.</h2>
       <p class="body" id="aboutBio">At Oasis Behavioural Health, care begins with listening. Lynda Chinyere Agbai is a board-certified Psychiatric Mental Health Nurse Practitioner (PMHNP) who provides evidence-based, personalized treatment in a warm and nonjudgmental environment. Whether you are navigating anxiety, depression, ADHD, trauma, or a mood disorder, you will find a steady partner in your care.</p>
       <p class="body">Every treatment plan is tailored to you — thoughtful medication management paired with genuine support, delivered entirely online so care fits your life.</p>
-      <div class="chips" id="specChips"></div>
     </div>
     <div>
       <div class="facts">
@@ -267,6 +277,9 @@
     <span class="eyebrow">How We Can Help</span>
     <h2 class="title">Services &amp; Specialties</h2>
     <div class="grid3" style="text-align:left" id="svcGrid"></div>
+    <h3 class="subhead">Specialties we treat</h3>
+    <p class="subnote">Compassionate, evidence-based care across the concerns that bring people to Oasis.</p>
+    <div class="spec-grid" id="specGrid"></div>
   </div>
 </section>
 
@@ -388,15 +401,22 @@
   var CFG=Object.assign({},DEFAULTS);
   try{var saved=JSON.parse(localStorage.getItem('oasis_cfg')||'{}');CFG=Object.assign(CFG,saved);}catch(e){}
 
-  var SPECIALTIES=['Anxiety','Depression','ADHD','Trauma & PTSD','Bipolar Disorder','OCD','Stress & Burnout','Grief & Loss','Life Transitions','Self-Esteem','Women’s Mental Health','Men’s Mental Health','Medication Management','Relationship Issues'];
-  var SERVICES=[
-    {ic:'💊',t:'Medication Management',d:'Thoughtful, ongoing psychiatric medication management — started and adjusted collaboratively, never one-size-fits-all.'},
-    {ic:'🌊',t:'Anxiety & Depression',d:'Evidence-based care to quiet racing thoughts, lift low mood, and help you feel like yourself again.'},
-    {ic:'⚡',t:'ADHD (Adults & Teens)',d:'Accurate evaluation and treatment for focus, organization, and follow-through — at school, work, and home.'},
-    {ic:'🕊️',t:'Trauma & PTSD',d:'A safe, steadying space to process trauma and regain a sense of calm and control.'},
-    {ic:'🌙',t:'Mood & Bipolar Care',d:'Stabilizing support for mood swings and bipolar disorder, with careful monitoring and partnership.'},
-    {ic:'💬',t:'Whole-Person Support',d:'Stress, burnout, grief, self-esteem, and life transitions — care that sees the whole you.'}
+  var SPECIALTIES=[
+    {t:'Anxiety',img:1239291},{t:'Depression',img:6382633},{t:'ADHD',img:3958828},
+    {t:'Trauma & PTSD',img:3822622},{t:'Bipolar Disorder',img:3812743},{t:'OCD',img:5428836},
+    {t:'Stress & Burnout',img:3755761},{t:'Grief & Loss',img:4098157},{t:'Life Transitions',img:7155176},
+    {t:'Self-Esteem',img:774909},{t:'Women’s Mental Health',img:1181686},{t:'Men’s Mental Health',img:4100672},
+    {t:'Medication Management',img:7176026},{t:'Relationship Issues',img:4098224}
   ];
+  var SERVICES=[
+    {ic:'💊',t:'Medication Management',img:5699456,d:'Thoughtful, ongoing psychiatric medication management — started and adjusted collaboratively, never one-size-fits-all.'},
+    {ic:'🌊',t:'Anxiety & Depression',img:762020,d:'Evidence-based care to quiet racing thoughts, lift low mood, and help you feel like yourself again.'},
+    {ic:'⚡',t:'ADHD (Adults & Teens)',img:3758105,d:'Accurate evaluation and treatment for focus, organization, and follow-through — at school, work, and home.'},
+    {ic:'🕊️',t:'Trauma & PTSD',img:6787202,d:'A safe, steadying space to process trauma and regain a sense of calm and control.'},
+    {ic:'🌙',t:'Mood & Bipolar Care',img:2379005,d:'Stabilizing support for mood swings and bipolar disorder, with careful monitoring and partnership.'},
+    {ic:'💬',t:'Whole-Person Support',img:3769021,d:'Stress, burnout, grief, self-esteem, and life transitions — care that sees the whole you.'}
+  ];
+  function pexel(id,w,h){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop&w='+w+'&h='+h;}
   var POSTS=[
     {cat:'Medication',ic:'💊',t:'Starting Psychiatric Medication: What to Really Expect',ex:'The honest, judgment-free guide to beginning medication — timelines, side effects, and how we adjust together.',
       body:'<p>Deciding to start a psychiatric medication can feel huge. Here is what the first few weeks usually look like, and why patience and partnership matter.</p><h4>It is a collaboration, not a prescription pad</h4><p>We start low, go slow, and check in often. Your feedback is the most important data we have.</p><h4>Give it a fair window</h4><p>Many medications take 2–6 weeks to show their full benefit. Early side effects often ease as your body adjusts.</p><h4>You are never stuck</h4><p>If something is not working, we change it. The goal is <em>you</em> feeling like yourself — not any particular pill.</p>'},
@@ -437,8 +457,8 @@
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
   /* ---------- Render ---------- */
-  document.getElementById('specChips').innerHTML=SPECIALTIES.map(function(s){return '<span class="chip">'+s+'</span>';}).join('');
-  document.getElementById('svcGrid').innerHTML=SERVICES.map(function(s){return '<div class="svc"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div>';}).join('');
+  document.getElementById('svcGrid').innerHTML=SERVICES.map(function(s){return '<div class="svc"><img class="svc-img" loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,620,420)+'"><div class="svc-body"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div></div>';}).join('');
+  document.getElementById('specGrid').innerHTML=SPECIALTIES.map(function(s){return '<div class="spec"><img loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,420,300)+'"><span>'+s.t+'</span></div>';}).join('');
   document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
     return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
       '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
