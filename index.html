@@ -95,6 +95,13 @@
   .spec:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 20px rgba(21,67,61,.09)}
   .spec img{width:100%;height:150px;object-fit:cover;display:block;background:var(--sage)}
   .spec span{display:block;padding:11px 13px;font-size:14px;color:var(--teal);font-weight:600}
+  .reel-wrap{position:relative}
+  .reel-nav{position:absolute;top:calc(50% - 14px);transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--teal);font-size:26px;line-height:1;cursor:pointer;box-shadow:0 7px 18px rgba(21,67,61,.18);transition:.2s;display:flex;align-items:center;justify-content:center}
+  .reel-nav:hover{background:var(--gold);color:#fff;border-color:var(--gold);transform:translateY(-50%) scale(1.06)}
+  .reel-nav:active{transform:translateY(-50%) scale(.96)}
+  .reel-nav.prev{left:-10px}
+  .reel-nav.next{right:-10px}
+  @media(max-width:560px){.reel-nav{width:40px;height:40px;font-size:22px}.reel-nav.prev{left:2px}.reel-nav.next{right:2px}}
   /* INSURANCE / PAY */
   .pay-bg{background:linear-gradient(160deg,#17463f,#123a34);color:#eef3ee}
   .pay-bg .eyebrow{color:var(--gold)}
@@ -281,7 +288,11 @@
     <div class="grid3" style="text-align:left" id="svcGrid"></div>
     <h3 class="subhead">Specialties we treat</h3>
     <p class="subnote">Compassionate, evidence-based care across the concerns that bring people to Oasis. <span style="color:var(--gold-dk)">Swipe the reel →</span></p>
-    <div class="spec-reel"><div class="spec-track" id="specGrid"></div></div>
+    <div class="reel-wrap">
+      <button type="button" class="reel-nav prev" aria-label="Previous specialties" onclick="reelNudge(-1)">&#8249;</button>
+      <div class="spec-reel"><div class="spec-track" id="specGrid"></div></div>
+      <button type="button" class="reel-nav next" aria-label="Next specialties" onclick="reelNudge(1)">&#8250;</button>
+    </div>
   </div>
 </section>
 
@@ -463,16 +474,36 @@
   (function(){var t=SPECIALTIES.map(function(s){return '<div class="spec"><img loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,420,300)+'"><span>'+s.t+'</span></div>';}).join('');document.getElementById('specGrid').innerHTML=t+t;startSpecReel();})();
   function startSpecReel(){
     var reel=document.querySelector('.spec-reel'); if(!reel) return;
-    if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var track=reel.firstElementChild, n=track.children.length/2, half=0;
-    function calc(){var el=track.children[n]; half=el?el.offsetLeft:track.scrollWidth/2;}
+    var track=reel.firstElementChild, n=track.children.length/2;
+    reel._half=0;
+    function calc(){var el=track.children[n]; reel._half=el?el.offsetLeft:track.scrollWidth/2;}
     calc(); window.addEventListener('resize',calc); window.addEventListener('load',calc);
-    var paused=false;
-    reel.addEventListener('mouseenter',function(){paused=true;});
-    reel.addEventListener('mouseleave',function(){paused=false;});
-    reel.addEventListener('touchstart',function(){paused=true;},{passive:true});
-    reel.addEventListener('touchend',function(){setTimeout(function(){paused=false;},2200);});
-    (function step(){ if(!paused&&half>0){ reel.scrollLeft+=0.6; if(reel.scrollLeft>=half) reel.scrollLeft-=half; } requestAnimationFrame(step); })();
+    reel._paused=false;
+    reel.addEventListener('mouseenter',function(){reel._paused=true;});
+    reel.addEventListener('mouseleave',function(){reel._paused=false;});
+    reel.addEventListener('touchstart',function(){reel._paused=true;},{passive:true});
+    reel.addEventListener('touchend',function(){setTimeout(function(){reel._paused=false;},2200);});
+    var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (function step(){
+      var h=reel._half;
+      if(h>0){
+        if(!reduce && !reel._paused) reel.scrollLeft+=0.6;   /* auto-advance */
+        if(reel.scrollLeft>=h) reel.scrollLeft-=h;           /* wrap forward */
+        else if(reel.scrollLeft<0) reel.scrollLeft+=h;       /* wrap back */
+      }
+      requestAnimationFrame(step);
+    })();
+  }
+  function reelNudge(dir){
+    var reel=document.querySelector('.spec-reel'); if(!reel) return;
+    var track=reel.firstElementChild, tile=track.children[0];
+    var step=((tile?tile.offsetWidth:228)+16)*3;             /* ~3 tiles per click */
+    var h=reel._half||reel.scrollWidth/2;
+    if(dir<0 && reel.scrollLeft<step && h>0) reel.scrollLeft+=h; /* jump into loop so Prev is infinite */
+    reel._paused=true;
+    reel.scrollBy({left:dir*step, behavior:'smooth'});
+    clearTimeout(reel._resumeT);
+    reel._resumeT=setTimeout(function(){reel._paused=false;},2000);
   }
   document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
     return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
