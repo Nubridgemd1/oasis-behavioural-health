@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Oasis Behavioural Health — Admin Console</title>
+<title>Oasis Behavioral Health — Admin Console</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2315433d'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23bd9a5f' font-family='Georgia,serif' font-style='italic'%3EO%3C/text%3E%3C/svg%3E">
@@ -199,11 +199,11 @@
   /* ---- marketing kit ---- */
   function renderKit(){var c=getCfg();
     var items=[
-      {t:'Instagram / Facebook caption',x:'🌿 Now accepting new clients at Oasis Behavioural Health.\n\nCompassionate, evidence-based online psychiatry with '+c.providerName+' — for anxiety, depression, ADHD, trauma & mood. Serving all of Texas. Most insurance accepted.\n\n✨ Book today: '+siteUrl()+'\n📞 '+c.phone+'\n\n#mentalhealth #psychiatry #texastherapist #medicationmanagement #anxiety #adhd #onlinetherapy'},
+      {t:'Instagram / Facebook caption',x:'🌿 Now accepting new clients at Oasis Behavioral Health.\n\nCompassionate, evidence-based online psychiatry with '+c.providerName+' — for anxiety, depression, ADHD, trauma & mood. Serving all of Texas. Most insurance accepted.\n\n✨ Book today: '+siteUrl()+'\n📞 '+c.phone+'\n\n#mentalhealth #psychiatry #texastherapist #medicationmanagement #anxiety #adhd #onlinetherapy'},
       {t:'Short post / Story',x:'You deserve to be heard. 💛\nOnline psychiatry across Texas with '+c.shortName+'.\nBook now → '+siteUrl()},
-      {t:'Email announcement',x:'Subject: A calm place to heal — now accepting new clients\n\nHi there,\n\nOasis Behavioural Health is welcoming new clients for online psychiatric care with '+c.providerName+'. We offer evidence-based medication management and whole-person support for anxiety, depression, ADHD, trauma, and mood disorders — all from the comfort of home, anywhere in Texas.\n\nMost major insurance plans are accepted, and a sliding scale is available.\n\nBook your appointment: '+siteUrl()+'\nQuestions? Call or text '+c.phone+'.\n\nWarmly,\nOasis Behavioural Health'},
-      {t:'SMS / WhatsApp',x:'Hi! Oasis Behavioural Health is accepting new clients for online psychiatry in Texas with '+c.shortName+'. Most insurance accepted. Book: '+siteUrl()+' or call '+c.phone+'.'},
-      {t:'Referral note (for providers)',x:'Referrals welcome: Oasis Behavioural Health provides online psychiatric evaluation & medication management across Texas ('+c.providerName+'). Conditions: anxiety, depression, ADHD, trauma, bipolar/mood, OCD. Insurance accepted. Refer your patients to '+siteUrl()+' or '+c.phone+'.'}
+      {t:'Email announcement',x:'Subject: A calm place to heal — now accepting new clients\n\nHi there,\n\nOasis Behavioral Health is welcoming new clients for online psychiatric care with '+c.providerName+'. We offer evidence-based medication management and whole-person support for anxiety, depression, ADHD, trauma, and mood disorders — all from the comfort of home, anywhere in Texas.\n\nMost major insurance plans are accepted, and a sliding scale is available.\n\nBook your appointment: '+siteUrl()+'\nQuestions? Call or text '+c.phone+'.\n\nWarmly,\nOasis Behavioral Health'},
+      {t:'SMS / WhatsApp',x:'Hi! Oasis Behavioral Health is accepting new clients for online psychiatry in Texas with '+c.shortName+'. Most insurance accepted. Book: '+siteUrl()+' or call '+c.phone+'.'},
+      {t:'Referral note (for providers)',x:'Referrals welcome: Oasis Behavioral Health provides online psychiatric evaluation & medication management across Texas ('+c.providerName+'). Conditions: anxiety, depression, ADHD, trauma, bipolar/mood, OCD. Insurance accepted. Refer your patients to '+siteUrl()+' or '+c.phone+'.'}
     ];
     document.getElementById('kitBox').innerHTML=items.map(function(it,i){
       return '<div class="field"><label>'+it.t+'</label><div class="copybox" id="kit'+i+'"><button class="btn gold sm cp" onclick="copyText(\'kit'+i+'\')">Copy</button>'+esc(it.x)+'</div></div>';
@@ -227,7 +227,7 @@
   function renderFlyers(){var c=getCfg();
     document.getElementById('flyerGrid').innerHTML=FLYERS.map(function(f,i){
       return '<div class="flyer-wrap"><div class="flyer" id="fly'+i+'" style="background:'+f.bg+'"><div class="inner">'+
-        '<div><div class="fscript">'+f.script+'</div><div class="fbrand">Oasis Behavioural Health</div></div>'+
+        '<div><div class="fscript">'+f.script+'</div><div class="fbrand">Oasis Behavioral Health</div></div>'+
         '<div class="fmid"><div class="ficon">'+f.ic+'</div><h3>'+f.h+'</h3><p>'+f.p+'</p><span class="fcta">'+f.cta+'</span></div>'+
         '<div class="ffoot">'+esc(c.phone)+' &nbsp;·&nbsp; oasisbehaviouralhealth.com</div>'+
         '</div></div>'+
@@ -244,7 +244,7 @@
     html2canvas(el,{scale:3,backgroundColor:null,useCORS:true}).then(function(canvas){
       canvas.toBlob(function(blob){
         var file=new File([blob],'oasis-flyer-'+(i+1)+'.png',{type:'image/png'});
-        if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Oasis Behavioural Health'}).catch(function(){});}
+        if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:'Oasis Behavioral Health'}).catch(function(){});}
         else{var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=file.name;a.click();toast('Saved — share it from your gallery');}
       });
     });
