@@ -10,14 +10,14 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,600;0,700;1,600&family=Montserrat:wght@400;500;600;700&family=Judson:ital,wght@0,400;0,700;1,400&display=swap">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2315433d'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='%23bd9a5f' font-family='Georgia,serif' font-style='italic'%3EO%3C/text%3E%3C/svg%3E">
 <style>
   :root{
     --bg:#f5faff; --paper:#ffffff; --ink:#14425f; --muted:#5a7488;
     --teal:#1a73b5; --teal2:#2a97d4; --gold:#46a046; --gold-dk:#3a8a3a;
     --sage:#e7f3fc; --line:#d9e8f3;
-    --script:'Great Vibes',cursive; --serif:'Cormorant Garamond',Georgia,serif; --sans:'Jost',Arial,sans-serif;
+    --script:'Cormorant','Cormorant Garamond',Georgia,serif; --serif:'Cormorant','Cormorant Garamond',Georgia,serif; --sans:'Montserrat',Arial,sans-serif; --accent:'Judson',Georgia,serif;
     --maxw:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -214,6 +214,111 @@
   .copyright{border-top:1px solid var(--line)!important;color:#8198a8!important}
   .copyright a{color:#8198a8!important}
   .fbrand .pt-badge{background:#fff!important}
+
+  /* ================= Odelus-style: forest green + cream + blush ================= */
+  body{background:#f6f1ee!important;font-weight:400!important;color:#283a30!important}
+  h1,h2,h3{color:#223129!important;letter-spacing:.3px}
+  .eyebrow{color:#6c7a55!important;letter-spacing:.3em}
+  .btn{border-radius:3px}
+  .btn.gold{background:#2c4c3b!important;color:#fff!important}
+  .btn.gold:hover{background:#22402f!important;color:#fff!important}
+  .btn.ghost{border-color:#2c4c3b!important;color:#2c4c3b!important;background:transparent!important}
+  .btn.ghost:hover{background:#2c4c3b!important;color:#fff!important}
+  .btn.ghost.light{border-color:rgba(255,255,255,.75)!important;color:#fff!important}
+  .btn.ghost.light:hover{background:rgba(255,255,255,.16)!important;color:#fff!important}
+  .btn.teal{background:#2c4c3b!important;color:#fff!important}
+  .btn.teal:hover{background:#22402f!important}
+  /* NAV */
+  header.nav{background:rgba(255,255,255,.95)!important;border-bottom:1px solid #e7e0d6!important}
+  .brand .b1{font-family:var(--serif)!important;font-weight:700!important;font-size:31px!important;color:#2c4c3b!important;-webkit-text-stroke:0!important;text-stroke:0!important;letter-spacing:.5px!important;line-height:1!important}
+  .brand .b2{color:#8a8470!important;letter-spacing:.32em!important}
+  .nav-links a{color:#3a4a3f!important}
+  .nav-links a:hover{color:#2c4c3b!important}
+  /* HERO: full-bleed photo + deep-green overlay */
+  .hero{background:#22402f!important;color:#fff!important;position:relative;overflow:hidden}
+  .hero:after{display:none!important}
+  .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1040&fit=crop') center 30%/cover no-repeat;transform:scale(1.02)}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,42,32,.94),rgba(26,42,32,.78) 52%,rgba(26,42,32,.5))}
+  .hero-content{position:relative;z-index:2;max-width:680px;padding:98px 0 112px}
+  .hero-content .eyebrow{color:#d9c49a!important}
+  .hero-content h1{color:#fff!important;font-weight:700!important;font-size:clamp(38px,5.4vw,62px)!important;margin:14px 0 18px!important;letter-spacing:.3px}
+  .hero-content p.lede{color:#e8ede7!important;font-size:18px;max-width:34em}
+  .hero-content .pt-badge{background:rgba(255,255,255,.1)!important;border:1px solid rgba(255,255,255,.32)!important;color:#eef3ee!important}
+  .hero-content .pt-badge b{color:#d9c49a!important}
+  /* STATS band */
+  .stats-band{position:relative;z-index:2;background:rgba(16,28,21,.78);border-top:1px solid rgba(255,255,255,.14)}
+  .stats-in{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:22px 24px}
+  .stat{display:flex;align-items:center;gap:12px}
+  .stat .si{font-size:23px;line-height:1}
+  .stat b{font-family:var(--serif);font-size:21px;font-weight:700;color:#fff;display:block;line-height:1.05}
+  .stat em{font-style:normal;font-size:12.5px;color:#cdd8cf;display:block;margin-top:2px}
+  @media(max-width:760px){.stats-in{grid-template-columns:1fr 1fr;gap:18px 14px}.hero-content{padding:74px 0 52px}}
+  @media(max-width:420px){.stats-in{grid-template-columns:1fr}}
+  /* Section backgrounds — alternate cream / warm-white / blush */
+  #about{background:#f6f1ee}
+  .svc-bg{background:#fbf7f4!important;border-top:1px solid #ece4da!important;border-bottom:1px solid #ece4da!important}
+  .svc{background:#fff!important;border:1px solid #e9e1d6!important}
+  .svc:hover{border-color:#2c4c3b!important;box-shadow:0 16px 30px rgba(44,76,59,.12)!important}
+  .svc h3{color:#2c4c3b!important}
+  .svc .ic{background:#f6f1ee!important}
+  .spec{background:#fff!important;border:1px solid #e9e1d6!important}
+  .spec:hover{border-color:#2c4c3b!important}
+  .spec span{color:#2c4c3b!important}
+  .subhead{color:#2c4c3b!important}
+  .reel-nav{background:#fff!important;border:1px solid #e3dccf!important;color:#2c4c3b!important}
+  .reel-nav:hover{background:#2c4c3b!important;color:#fff!important;border-color:#2c4c3b!important}
+  .chip{background:#eef1ea!important;color:#2c4c3b!important;border:1px solid #dfe4d6!important}
+  .facts{border-left:2px solid #c6a86f!important}
+  .facts .k{color:#8a6a3e!important}
+  .facts .v{color:#223129!important}
+  /* About collage */
+  .collage{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:118px;gap:10px;margin-bottom:26px}
+  .collage img{width:100%;height:100%;object-fit:cover;border-radius:6px;box-shadow:0 10px 24px rgba(44,76,59,.1)}
+  .collage .tall{grid-row:span 2}
+  /* Provider feature (large photo, like reference) */
+  .provider-feature{background:#f7efed}
+  .pf-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:54px;align-items:center}
+  .pf-photo{position:relative}
+  .pf-photo img{width:100%;border-radius:6px;box-shadow:0 26px 54px rgba(44,76,59,.24)}
+  .pf-photo .cap{position:absolute;left:22px;bottom:-16px;background:#2c4c3b;color:#fff;padding:9px 20px;border-radius:3px;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;box-shadow:0 10px 22px rgba(0,0,0,.2)}
+  .pf-text h2{color:#2c4c3b!important;font-size:clamp(28px,3.6vw,42px)}
+  .pf-text .body{color:#51615a!important}
+  .qbox{background:#fff;border-left:3px solid #c6a86f;padding:15px 20px;margin:18px 0;color:#4a5750;font-family:var(--accent);font-style:italic;font-size:18px;border-radius:0 6px 6px 0;box-shadow:0 8px 20px rgba(44,76,59,.07)}
+  @media(max-width:860px){.pf-grid{grid-template-columns:1fr;gap:40px}.pf-photo{max-width:420px;margin:0 auto 10px}}
+  /* Insurance / Payment → deep green */
+  .pay-bg{background:linear-gradient(160deg,#2c4c3b,#22402f)!important;color:#eef3ee!important}
+  .pay-bg .eyebrow{color:#d9c49a!important}
+  .pay-bg h2{color:#fff!important}
+  .pay-bg p,.pay-bg .panel p{color:#dbe4dd!important}
+  .panel{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.2)!important;box-shadow:none!important}
+  .panel h3{color:#d9c49a!important}
+  .ins-list span{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.16)!important;color:#eef3ee!important}
+  .cards-row span{color:#dbe4dd!important;border:1px solid rgba(255,255,255,.2)!important}
+  /* Blog → warm-white with green cards */
+  #blog{background:#fbf7f4}
+  .post{background:#fff!important;border:1px solid #e9e1d6!important}
+  .post .ph{background:linear-gradient(135deg,#2c4c3b,#3c6a4f)!important;color:#d9c49a!important}
+  .post h3{color:#2c4c3b!important}
+  .post h3:hover{color:#8a6a3e!important}
+  .post .cat{color:#8a6a3e!important}
+  .readlink{color:#8a6a3e!important;border-bottom:1px solid #c6a86f!important}
+  /* Footer → deep green */
+  footer{background:#22402f!important;color:#cdd8cf!important;border-top:none!important}
+  footer h4{color:#d9c49a!important}
+  footer a{color:#cdd8cf!important}
+  footer a:hover{color:#fff!important}
+  .fbrand .b1{font-family:var(--serif)!important;color:#fff!important;font-weight:700!important}
+  .fbrand p,footer .fbrand span{color:#aebfb2!important}
+  .copyright{border-top:1px solid rgba(255,255,255,.14)!important;color:#9fb0a4!important}
+  .copyright a{color:#9fb0a4!important}
+  .fbrand .pt-badge{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.28)!important;color:#eef3ee!important}
+  .fbrand .pt-badge b{color:#d9c49a!important}
+  /* Modal */
+  .modal .mhead{background:#2c4c3b!important}
+  .seg button.on{background:#2c4c3b!important;border-color:#2c4c3b!important;color:#fff!important}
+  .toast{background:#2c4c3b!important}
+  .field label,.note,.share-row span{color:#8a6a3e!important}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:#2c4c3b!important}
 </style>
 </head>
 <body>
@@ -238,24 +343,26 @@
 
 <!-- HERO -->
 <section class="hero" id="top" style="padding:0">
-  <div class="wrap hero-in">
-    <div>
-      <span class="script">a calm place to heal</span>
-      <h1>Compassionate psychiatric care, from the comfort of home.</h1>
-      <p class="lede" id="heroBio">Evidence-based online psychiatry and medication management with <b id="heroName">Lynda Chinyere Agbai, APRN, PMHNP-BC</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.</p>
-      <div class="hero-cta">
-        <a href="#" class="btn gold" onclick="openBook();return false">Book an Appointment</a>
-        <a href="#" class="btn ghost" id="callBtn" onclick="callNow();return false">Call (346) 253-3485</a>
-      </div>
-      <a class="pt-badge" id="ptBadge" href="https://www.psychologytoday.com/profile/1760882" target="_blank" rel="noopener">
-        ✦ Verified on <b>Psychology Today</b> — view full profile ↗
-      </a>
+  <div class="hero-photo" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="wrap"><div class="hero-content">
+    <span class="eyebrow">A Calm Place to Heal &middot; Online Psychiatry in Texas</span>
+    <h1>Your path to mental clarity starts here.</h1>
+    <p class="lede" id="heroBio">Evidence-based online psychiatry and medication management with <b id="heroName">Lynda Chinyere Agbai, APRN, PMHNP-BC</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn gold" onclick="openBook();return false">Book an Appointment</a>
+      <a href="#" class="btn ghost light" id="callBtn" onclick="callNow();return false">Call (346) 253-3485</a>
     </div>
-    <div class="portrait">
-      <div class="frame"><img src="assets/lynda-agbai.jpeg" alt="Lynda Chinyere Agbai, APRN, PMHNP-BC"></div>
-      <span class="cap" id="capName">Lynda Agbai, PMHNP-BC</span>
-    </div>
-  </div>
+    <a class="pt-badge" id="ptBadge" href="https://www.psychologytoday.com/profile/1760882" target="_blank" rel="noopener">
+      ✦ Verified on <b>Psychology Today</b> — view full profile ↗
+    </a>
+  </div></div>
+  <div class="stats-band"><div class="wrap stats-in">
+    <div class="stat"><span class="si">🩺</span><div><b>100%</b><em>Telehealth Services</em></div></div>
+    <div class="stat"><span class="si">🤝</span><div><b>Personalized</b><em>1-on-1 Meetings</em></div></div>
+    <div class="stat"><span class="si">🌿</span><div><b>Evidence-Based</b><em>Compassionate Care</em></div></div>
+    <div class="stat"><span class="si">🛡️</span><div><b>Insurance</b><em>&amp; Private Pay</em></div></div>
+  </div></div>
 </section>
 
 <!-- ABOUT -->
@@ -268,6 +375,11 @@
       <p class="body">Every treatment plan is tailored to you — thoughtful medication management paired with genuine support, delivered entirely online so care fits your life.</p>
     </div>
     <div>
+      <div class="collage">
+        <img class="tall" loading="lazy" alt="Compassionate telehealth consultation" src="https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=560&h=720&fit=crop">
+        <img loading="lazy" alt="Online psychiatry visit" src="https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg?auto=compress&cs=tinysrgb&w=460&h=340&fit=crop">
+        <img loading="lazy" alt="Personalized medication management" src="https://images.pexels.com/photos/8441775/pexels-photo-8441775.jpeg?auto=compress&cs=tinysrgb&w=460&h=340&fit=crop">
+      </div>
       <div class="facts">
         <div><div class="k">Provider</div><div class="v" id="fName">Lynda Chinyere Agbai, APRN, PMHNP-BC</div></div>
         <div><div class="k">Credentials</div><div class="v">Psychiatric Mental Health Nurse Practitioner · APRN, PMHNP-BC</div></div>
@@ -276,6 +388,24 @@
         <div><div class="k">Based In</div><div class="v">Richmond &amp; Austin, Texas</div></div>
         <div><div class="k">Ages</div><div class="v">Adults &amp; Adolescents</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROVIDER FEATURE -->
+<section class="provider-feature">
+  <div class="wrap pf-grid">
+    <div class="pf-photo">
+      <img src="assets/lynda-agbai.jpeg" alt="Lynda Chinyere Agbai, APRN, PMHNP-BC">
+      <span class="cap" id="capName">Lynda Agbai, PMHNP-BC</span>
+    </div>
+    <div class="pf-text">
+      <span class="eyebrow">Meet Your Provider</span>
+      <h2 class="title">Lynda Chinyere Agbai, PMHNP-BC</h2>
+      <p class="body">Lynda is a board-certified Psychiatric Mental Health Nurse Practitioner (APRN, PMHNP-BC) dedicated to helping adults and adolescents achieve lasting emotional wellbeing. She offers thoughtful, evidence-based medication management and compassionate support — delivered entirely online across Texas.</p>
+      <div class="qbox">&ldquo;Healing begins when you feel truly heard. My role is to walk with you &mdash; at your pace, with care tailored to your life.&rdquo;</div>
+      <p class="body">With expertise across anxiety, depression, ADHD, trauma, and mood disorders, Lynda builds each plan in partnership with you &mdash; honoring your goals, your values, and your story.</p>
+      <a href="#" class="btn gold" onclick="openBook();return false">Book an Appointment</a>
     </div>
   </div>
 </section>
