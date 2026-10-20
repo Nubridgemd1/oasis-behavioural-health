@@ -237,8 +237,10 @@
   /* HERO: full-bleed photo + deep-green overlay */
   .hero{background:#22402f!important;color:#fff!important;position:relative;overflow:hidden}
   .hero:after{display:none!important}
-  .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1040&fit=crop') center 30%/cover no-repeat;transform:scale(1.02)}
-  .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,42,32,.94),rgba(26,42,32,.78) 52%,rgba(26,42,32,.5))}
+  @keyframes heroKen{0%{transform:scale(1.06) translate(0,0)}100%{transform:scale(1.12) translate(-2.4%,-1.4%)}}
+  .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/7176319/pexels-photo-7176319.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1040&fit=crop') 54% 38%/cover no-repeat;transform:scale(1.06);animation:heroKen 20s ease-in-out infinite alternate;will-change:transform}
+  @media(prefers-reduced-motion:reduce){.hero-photo{animation:none;transform:scale(1.02)}}
+  .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,42,32,.9),rgba(26,42,32,.72) 52%,rgba(26,42,32,.45))}
   .hero-content{position:relative;z-index:2;max-width:680px;padding:98px 0 112px}
   .hero-content .eyebrow{color:#d9c49a!important}
   .hero-content h1{color:#fff!important;font-weight:700!important;font-size:clamp(38px,5.4vw,62px)!important;margin:14px 0 18px!important;letter-spacing:.3px}
@@ -252,7 +254,14 @@
   .stat .si{font-size:23px;line-height:1}
   .stat b{font-family:var(--serif);font-size:21px;font-weight:700;color:#fff;display:block;line-height:1.05}
   .stat em{font-style:normal;font-size:12.5px;color:#cdd8cf;display:block;margin-top:2px}
-  @media(max-width:760px){.stats-in{grid-template-columns:1fr 1fr;gap:18px 14px}.hero-content{padding:74px 0 52px}}
+  @media(max-width:760px){
+    .stats-in{grid-template-columns:1fr 1fr;gap:18px 14px}
+    .hero-content{padding:64px 0 48px}
+    /* show the two people on phones: lighter, vertical overlay + framed crop */
+    .hero-photo{background-position:58% 42%}
+    .hero-overlay{background:linear-gradient(180deg,rgba(20,33,25,.8) 0%,rgba(20,33,25,.46) 40%,rgba(20,33,25,.4) 70%,rgba(20,33,25,.6) 100%)}
+    .hero-content h1,.hero-content p.lede{text-shadow:0 2px 16px rgba(10,18,13,.6)}
+  }
   @media(max-width:420px){.stats-in{grid-template-columns:1fr}}
   /* Section backgrounds — alternate cream / warm-white / blush */
   #about{background:#f6f1ee}
