@@ -131,8 +131,8 @@
     </div>
     <div>
       <h4>Contact</h4>
-      <a href="tel:+13462533485">&#128222; (346) 253-3485</a><br>
-      <a href="mailto:hello@oasisbehaviouralhealth.com">&#9993; hello@oasisbehaviouralhealth.com</a><br>
+      <a id="footPhone" href="tel:+13462533485">&#128222; (346) 253-3485</a><br>
+      <a id="footEmail" href="mailto:hello@oasisbehaviouralhealth.com">&#9993; hello@oasisbehaviouralhealth.com</a><br>
       <a href="index.html#book">&#10022; Book an appointment</a>
     </div>
     <div>
@@ -149,15 +149,19 @@
   </div>
 </footer>
 
+<script src="assets/oasis-sync.js"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  /* reflect admin-edited provider details if present */
-  try{
-    var CFG=JSON.parse(localStorage.getItem('oasis_cfg')||'{}');
-    if(CFG.providerName){document.getElementById('fName').textContent=CFG.providerName;}
-    if(CFG.shortName){document.getElementById('capName').textContent=CFG.shortName;}
-    if(CFG.bio){document.getElementById('aboutBio').textContent=CFG.bio;}
-  }catch(e){}
+  function applyAbout(CFG){
+    if(!CFG) return;
+    if(CFG.providerName){var _f=document.getElementById('fName');if(_f)_f.textContent=CFG.providerName;}
+    if(CFG.shortName){var _c=document.getElementById('capName');if(_c)_c.textContent=CFG.shortName;}
+    if(CFG.bio){var _a=document.getElementById('aboutBio');if(_a)_a.textContent=CFG.bio;}
+    if(window.OasisSync)OasisSync.applyContactIds(CFG);
+  }
+  /* instant: cached config; then live: shared config from Supabase */
+  try{applyAbout(JSON.parse(localStorage.getItem('oasis_cfg')||'{}'));}catch(e){}
+  if(window.OasisSync){OasisSync.getConfig().then(function(c){if(c){applyAbout(c);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}}});}
 </script>
 </body>
 </html>

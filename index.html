@@ -518,6 +518,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="assets/oasis-sync.js"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
 
@@ -713,6 +714,10 @@
 
   /* deep-link to a post */
   applyCfg();
+  /* Pull shared config from Supabase so contact/details reflect on every device */
+  if(window.OasisSync){OasisSync.getConfig().then(function(remote){
+    if(remote&&typeof remote==='object'){CFG=Object.assign(CFG,remote);try{localStorage.setItem('oasis_cfg',JSON.stringify(CFG));}catch(e){}applyCfg();}
+  });}
   (function(){if((location.hash||'')==='#book'){openBook();}})();
   // close modals on overlay click
   ['bookOv','postOv'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});});

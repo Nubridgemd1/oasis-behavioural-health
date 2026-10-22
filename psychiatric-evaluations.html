@@ -126,7 +126,7 @@
     <p>A thorough, compassionate assessment of your mental health &mdash; the foundation of a care plan built entirely around you.</p>
     <a href="index.html#book" class="btn gold">Book an Evaluation</a>
     &nbsp;
-    <a href="tel:+13462533485" class="btn ghost light">Call (346) 253-3485</a>
+    <a id="callBtn" href="tel:+13462533485" class="btn ghost light">Call (346) 253-3485</a>
   </div></div>
 </section>
 
@@ -200,8 +200,8 @@
     </div>
     <div>
       <h4>Contact</h4>
-      <a href="tel:+13462533485">&#128222; (346) 253-3485</a><br>
-      <a href="mailto:hello@oasisbehaviouralhealth.com">&#9993; hello@oasisbehaviouralhealth.com</a><br>
+      <a id="footPhone" href="tel:+13462533485">&#128222; (346) 253-3485</a><br>
+      <a id="footEmail" href="mailto:hello@oasisbehaviouralhealth.com">&#9993; hello@oasisbehaviouralhealth.com</a><br>
       <a href="index.html#book">&#10022; Book an appointment</a>
     </div>
     <div>
@@ -218,8 +218,12 @@
   </div>
 </footer>
 
+<script src="assets/oasis-sync.js"></script>
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
+  /* reflect shared contact details (phone/email) from Supabase */
+  try{if(window.OasisSync)OasisSync.applyContactIds(JSON.parse(localStorage.getItem('oasis_cfg')||'{}'));}catch(e){}
+  if(window.OasisSync){OasisSync.getConfig().then(function(c){if(c){OasisSync.applyContactIds(c);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}}});}
   function pexel(id){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=420';}
   var PICS=[7579831,5325840,7659874,7709087,6129507,3931633,3153201,5699844,5407206,5452293];
   (function(){

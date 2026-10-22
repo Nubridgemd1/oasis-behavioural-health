@@ -178,8 +178,9 @@
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="assets/oasis-sync.js"></script>
 <script>
-  /* ---- config (shared with public site via localStorage) ---- */
+  /* ---- config (shared with public site via Supabase + localStorage cache) ---- */
   var DEFAULTS={providerName:'Lynda Chinyere Agbai, APRN, PMHNP-BC',shortName:'Lynda Agbai, PMHNP-BC',phone:'(346) 253-3485',
     email:'hello@oasisbehaviouralhealth.com',ptLink:'https://www.psychologytoday.com/profile/1760882',paymentLink:'',bookingEndpoint:'',
     bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.',
@@ -188,7 +189,10 @@
   function passHash(){return localStorage.getItem('oasis_pass')||'oasis2026';}
 
   /* ---- login ---- */
-  function login(){var v=document.getElementById('pass').value;if(v===passHash()){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';loadAll();}else{toast('Incorrect passcode');}}
+  function login(){var v=document.getElementById('pass').value;if(v===passHash()){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';loadAll();
+    /* pull the live shared config so the form shows what every visitor sees */
+    if(window.OasisSync){OasisSync.getConfig().then(function(remote){if(remote&&typeof remote==='object'){var c=Object.assign(getCfg(),remote);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}loadAll();}});}
+  }else{toast('Incorrect passcode');}}
   function logout(){document.getElementById('app').style.display='none';document.getElementById('gate').style.display='flex';document.getElementById('pass').value='';}
   function changePass(){if(document.getElementById('curPass').value!==passHash()){toast('Current passcode is wrong');return;}var n=document.getElementById('newPass').value.trim();if(n.length<4){toast('Use at least 4 characters');return;}localStorage.setItem('oasis_pass',n);document.getElementById('curPass').value='';document.getElementById('newPass').value='';toast('Passcode updated');}
 
@@ -203,7 +207,10 @@
   function saveCfg(){var c=getCfg();
     ['providerName','shortName','phone','email','ptLink','paymentLink','bookingEndpoint','bio'].forEach(function(k){c[k]=document.getElementById('f_'+k).value.trim();});
     c.insurers=[];
-    localStorage.setItem('oasis_cfg',JSON.stringify(c));toast('Saved — your website is updated');renderKit();renderFlyers();
+    localStorage.setItem('oasis_cfg',JSON.stringify(c));renderKit();renderFlyers();
+    /* push to Supabase so the change is permanent and shows on every device */
+    if(window.OasisSync){toast('Saving to your live site…');OasisSync.setConfig(c).then(function(ok){toast(ok?'Saved — live on every device':'Saved on this device (cloud sync failed — check Supabase)');});}
+    else{toast('Saved — your website is updated');}
   }
   function resetCfg(){if(confirm('Reset all practice details to defaults?')){localStorage.removeItem('oasis_cfg');loadAll();toast('Reset to defaults');}}
 
