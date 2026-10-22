@@ -107,7 +107,7 @@
     </div>
     <div>
       <div class="pf-photo">
-        <img src="assets/lynda-agbai-new.jpg" alt="Lynda Chinyere Agbai, APRN, PMHNP-BC">
+        <img id="aboutPhoto" src="assets/lynda-agbai-new.jpg" alt="Lynda Chinyere Agbai, APRN, PMHNP-BC">
         <span class="cap" id="capName">Lynda Agbai, PMHNP-BC</span>
       </div>
       <div class="facts">
@@ -161,7 +161,8 @@
   }
   /* instant: cached config; then live: shared config from Supabase */
   try{applyAbout(JSON.parse(localStorage.getItem('oasis_cfg')||'{}'));}catch(e){}
-  if(window.OasisSync){OasisSync.getConfig().then(function(c){if(c){applyAbout(c);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}}});}
+  if(window.OasisSync){OasisSync.getConfig().then(function(c){if(c){applyAbout(c);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}}});
+    OasisSync.getImages().then(function(im){if(im&&im.about){var _p=document.getElementById('aboutPhoto');if(_p)_p.src=im.about;}});}
 </script>
 </body>
 </html>

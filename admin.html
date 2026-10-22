@@ -65,6 +65,14 @@
   .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;padding:12px 20px;border-radius:3px;font-size:14px;opacity:0;transition:.3s;z-index:60;pointer-events:none}
   .toast.show{opacity:1}
   @media(max-width:620px){.row2{grid-template-columns:1fr}}
+  .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:6px}
+  .pcell{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  .pcell .pv{width:100%;height:132px;object-fit:cover;display:block;background:var(--sage)}
+  .pcell .pb{padding:10px 12px}
+  .pcell .pt{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px}
+  .pcell label.up{display:inline-block;cursor:pointer;background:var(--teal);color:#fff;font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:6px}
+  .pcell label.up:hover{background:#22402f}
+  .pcell input[type=file]{display:none}
 </style>
 </head>
 <body>
@@ -91,6 +99,7 @@
   <div class="tabs">
     <button class="on" data-t="update" onclick="tab('update')">Update</button>
     <button data-t="journal" onclick="tab('journal')">Journal</button>
+    <button data-t="photos" onclick="tab('photos')">Photos</button>
     <button data-t="kit" onclick="tab('kit')">Marketing Kit</button>
     <button data-t="flyers" onclick="tab('flyers')">Flyers</button>
     <button data-t="bookings" onclick="tab('bookings')">Bookings</button>
@@ -133,6 +142,15 @@
         <div class="sub">Edit, add, or remove blog posts. Changes appear on your Journal page (on this device). <b>Body</b> accepts simple HTML like &lt;p&gt;…&lt;/p&gt; and &lt;h4&gt;…&lt;/h4&gt;.</div>
         <div id="postList"></div>
         <div style="margin-top:6px"><button class="btn ghost" onclick="addPost()">+ Add post</button> <button class="btn gold" onclick="savePosts()">Save journal</button> <button class="btn ghost" onclick="resetPosts()">Reset to defaults</button></div>
+      </div>
+    </div>
+
+    <!-- PHOTOS -->
+    <div class="panel" id="p-photos">
+      <div class="pcard">
+        <h2>Photos</h2>
+        <div class="sub">Upload or replace photos from any device. Changes save to the cloud and appear for <b>every visitor</b> within seconds. Best results: clear, well-lit images; square or portrait for the About photo, landscape for reel tiles (shown ~228×150). Max ~5&nbsp;MB each.</div>
+        <div id="photoGrid" class="photo-grid"></div>
       </div>
     </div>
 
@@ -197,7 +215,7 @@
   function changePass(){if(document.getElementById('curPass').value!==passHash()){toast('Current passcode is wrong');return;}var n=document.getElementById('newPass').value.trim();if(n.length<4){toast('Use at least 4 characters');return;}localStorage.setItem('oasis_pass',n);document.getElementById('curPass').value='';document.getElementById('newPass').value='';toast('Passcode updated');}
 
   /* ---- tabs ---- */
-  function tab(t){document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t);});if(t==='bookings')renderBookings();if(t==='journal')renderPosts();}
+  function tab(t){document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t);});if(t==='bookings')renderBookings();if(t==='journal')renderPosts();if(t==='photos')renderPhotos();}
 
   /* ---- update ---- */
   function loadAll(){var c=getCfg();
@@ -213,6 +231,56 @@
     else{toast('Saved — your website is updated');}
   }
   function resetCfg(){if(confirm('Reset all practice details to defaults?')){localStorage.removeItem('oasis_cfg');loadAll();toast('Reset to defaults');}}
+
+  /* ---- photos (upload to Supabase Storage; live on every device) ---- */
+  function pexThumb(id){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=300&h=200';}
+  var PHOTO_SLOTS=[
+    {id:'about',label:'About — provider photo',def:'assets/lynda-agbai-new.jpg'},
+    {id:'reel:Truly heard',label:'Reel · Truly heard',def:pexThumb(7579831)},
+    {id:'reel:A warm welcome',label:'Reel · A warm welcome',def:'assets/warm-welcome-reel.jpg'},
+    {id:'reel:Expert care',label:'Reel · Expert care',def:'assets/expert-care-banner.png'},
+    {id:'reel:Telehealth visits',label:'Reel · Telehealth visits',def:'assets/telehealth-reel.png'},
+    {id:'reel:Our approach',label:'Reel · Our approach',def:pexThumb(6129507)},
+    {id:'reel:Support that helps',label:'Reel · Support that helps',def:pexThumb(3931633)},
+    {id:'reel:A steady partner',label:'Reel · A steady partner',def:pexThumb(3153201)},
+    {id:'reel:You are not alone',label:'Reel · You are not alone',def:'assets/not-alone-reel.jpg'},
+    {id:'reel:Careful assessment',label:'Reel · Careful assessment',def:pexThumb(5407206)},
+    {id:'reel:Compassionate care',label:'Reel · Compassionate care',def:pexThumb(5452293)}
+  ];
+  var IMAGES={reel:{}};
+  function curSrc(slot){
+    if(slot.id==='about') return (IMAGES.about)||slot.def;
+    var cap=slot.id.slice(5); var o=IMAGES.reel&&IMAGES.reel[cap];
+    return (o&&(o.src||o))||slot.def;
+  }
+  function renderPhotos(){
+    if(!window.OasisSync){document.getElementById('photoGrid').innerHTML='<div class="sub">Cloud sync unavailable.</div>';return;}
+    OasisSync.getImages().then(function(im){
+      IMAGES=im&&typeof im==='object'?im:{reel:{}}; if(!IMAGES.reel)IMAGES.reel={};
+      document.getElementById('photoGrid').innerHTML=PHOTO_SLOTS.map(function(s,i){
+        return '<div class="pcell"><img class="pv" id="pv'+i+'" src="'+curSrc(s)+'" alt="">'+
+          '<div class="pb"><div class="pt">'+s.label+'</div>'+
+          '<label class="up">Upload photo<input type="file" accept="image/*" onchange="uploadImg(\''+s.id.replace(/'/g,"\\'")+'\',this,'+i+')"></label></div></div>';
+      }).join('');
+    });
+  }
+  function uploadImg(slotId,input,i){
+    var f=input.files&&input.files[0]; if(!f)return;
+    if(!/^image\//.test(f.type)){toast('Please choose an image file');input.value='';return;}
+    if(f.size>5*1024*1024){toast('Image is too large (max 5 MB)');input.value='';return;}
+    toast('Uploading photo…');
+    var ext=(f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'')||'jpg';
+    var key=slotId.replace(/[^a-z0-9]+/gi,'-').toLowerCase();
+    var path=key+'-'+Date.now()+'.'+ext;
+    OasisSync.uploadPhoto(path,f).then(function(url){
+      if(!url){toast('Upload failed — is the storage bucket set up?');input.value='';return;}
+      if(slotId==='about'){IMAGES.about=url;}
+      else{var cap=slotId.slice(5); if(!IMAGES.reel)IMAGES.reel={}; IMAGES.reel[cap]={src:url};}
+      var pv=document.getElementById('pv'+i); if(pv)pv.src=url;
+      OasisSync.setImages(IMAGES).then(function(ok){toast(ok?'Photo updated — live on every device':'Uploaded, but saving failed');});
+      input.value='';
+    });
+  }
 
   /* ---- marketing kit ---- */
   function renderKit(){var c=getCfg();

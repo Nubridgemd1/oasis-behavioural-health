@@ -34,12 +34,29 @@
     if(cb && c.phone){ cb.textContent = 'Call ' + c.phone; if(cb.getAttribute('href') && cb.getAttribute('href').indexOf('tel:')===0) cb.setAttribute('href','tel:' + c.phone.replace(/[^0-9+]/g,'')); }
   }
 
+  var BUCKET = 'site-photos';
+  /* Upload an image File to Supabase Storage; resolves to its public URL (or null). */
+  function uploadPhoto(path, file){
+    return fetch(SB_URL + '/storage/v1/object/' + BUCKET + '/' + path, {
+      method: 'POST',
+      headers: Object.assign({ 'x-upsert': 'true',
+        'Content-Type': (file && file.type) || 'application/octet-stream',
+        'Cache-Control': '3600' }, H),
+      body: file
+    }).then(function(r){
+      return r.ok ? (SB_URL + '/storage/v1/object/public/' + BUCKET + '/' + path) : null;
+    }).catch(function(){ return null; });
+  }
+
   window.OasisSync = {
     url: SB_URL,
     get: get,
     set: set,
     getConfig: function(){ return get('config'); },
     setConfig: function(v){ return set('config', v); },
+    getImages: function(){ return get('images'); },
+    setImages: function(v){ return set('images', v); },
+    uploadPhoto: uploadPhoto,
     applyContactIds: applyContactIds
   };
 })();
