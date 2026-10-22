@@ -365,13 +365,13 @@
   <div class="wrap nav-in">
     <a href="#top" class="brand" aria-label="Oasis Behavioral Health home"><img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" class="brandlogo"></a>
     <nav class="nav-links" id="navLinks">
-      <a href="#about">About</a>
+      <a href="about.html">About</a>
       <div class="nav-item">
         <a href="psychiatric-evaluations.html" class="dd-top">Services <span class="caret">&#9662;</span></a>
         <div class="dd-menu"><a href="psychiatric-evaluations.html">Psychiatric Evaluations</a></div>
       </div>
       <a href="#insurance">Insurance</a>
-      <a href="#blog">Journal</a>
+      <a href="journal.html">Journal</a>
       <a href="#contact">Contact</a>
       <a href="#" class="btn gold" onclick="openBook();return false">Book Now</a>
     </nav>
@@ -401,32 +401,6 @@
     <div class="stat"><span class="si">🌿</span><div><b>Evidence-Based</b><em>Compassionate Care</em></div></div>
     <div class="stat"><span class="si">🛡️</span><div><b>Insurance</b><em>&amp; Private Pay</em></div></div>
   </div></div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="wrap two">
-    <div>
-      <span class="eyebrow">About the Practice</span>
-      <h2 class="title">You deserve to be heard, supported, and understood.</h2>
-      <p class="body" id="aboutBio">At Oasis Behavioral Health, care begins with listening. Lynda Chinyere Agbai is a board-certified Psychiatric Mental Health Nurse Practitioner (PMHNP) who provides evidence-based, personalized treatment in a warm and nonjudgmental environment. Whether you are navigating anxiety, depression, ADHD, trauma, or a mood disorder, you will find a steady partner in your care.</p>
-      <p class="body">Every treatment plan is tailored to you — thoughtful medication management paired with genuine support, delivered entirely online so care fits your life.</p>
-    </div>
-    <div>
-      <div class="pf-photo" style="margin-bottom:36px">
-        <img src="assets/lynda-agbai.jpeg" alt="Lynda Chinyere Agbai, APRN, PMHNP-BC">
-        <span class="cap" id="capName">Lynda Agbai, PMHNP-BC</span>
-      </div>
-      <div class="facts">
-        <div><div class="k">Provider</div><div class="v" id="fName">Lynda Chinyere Agbai, APRN, PMHNP-BC</div></div>
-        <div><div class="k">Credentials</div><div class="v">Psychiatric Mental Health Nurse Practitioner · APRN, PMHNP-BC</div></div>
-        <div><div class="k">Serving</div><div class="v">Online — Texas &amp; Telehealth States</div></div>
-        <div><div class="k">Licensed In</div><div class="v">Texas · Washington · New York · New Mexico <span style="font-size:13px;color:var(--gold-dk)">(Telehealth)</span></div></div>
-        <div><div class="k">Based In</div><div class="v">Richmond &amp; Austin, Texas</div></div>
-        <div><div class="k">Ages</div><div class="v">Adults &amp; Adolescents</div></div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- TREATMENTS: PSYCHIATRIC EVALUATIONS -->
@@ -474,16 +448,6 @@
   </div>
 </section>
 
-<!-- BLOG -->
-<section id="blog">
-  <div class="wrap center">
-    <span class="eyebrow">The Oasis Journal</span>
-    <h2 class="title">Insights for a calmer mind</h2>
-    <p class="body center" style="max-width:40em;margin:0 auto">Practical, compassionate reading on mental wellness — share any article with someone who needs it.</p>
-    <div class="blog-grid" id="blogGrid"></div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer id="contact">
   <div class="wrap fgrid">
@@ -501,10 +465,10 @@
     </div>
     <div>
       <h4>Explore</h4>
-      <a href="#about">About Lynda</a><br>
+      <a href="about.html">About Lynda</a><br>
       <a href="#services">Services</a><br>
       <a href="#insurance">Insurance &amp; Payment</a><br>
-      <a href="#blog">The Oasis Journal</a><br>
+      <a href="journal.html">The Oasis Journal</a><br>
       <a href="admin.html">Admin</a>
     </div>
   </div>
@@ -615,9 +579,9 @@
   function applyCfg(){
     document.getElementById('heroName').textContent=CFG.providerName;
     document.getElementById('heroBio').innerHTML='Evidence-based online psychiatry and medication management with <b id="heroName">'+esc(CFG.providerName)+'</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.';
-    document.getElementById('fName').textContent=CFG.providerName;
-    document.getElementById('capName').textContent=CFG.shortName;
-    document.getElementById('aboutBio').textContent=CFG.bio;
+    var _f=document.getElementById('fName');if(_f)_f.textContent=CFG.providerName;
+    var _c=document.getElementById('capName');if(_c)_c.textContent=CFG.shortName;
+    var _a=document.getElementById('aboutBio');if(_a)_a.textContent=CFG.bio;
     document.getElementById('ptBadge').href=CFG.ptLink;
     document.getElementById('footEmail').textContent='✉ '+CFG.email;
     document.getElementById('footEmail').href='mailto:'+CFG.email;
@@ -663,12 +627,12 @@
     clearTimeout(reel._resumeT);
     reel._resumeT=setTimeout(function(){reel._paused=false;},2000);
   }
-  document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
+  (function(){var bg=document.getElementById('blogGrid');if(!bg)return;bg.innerHTML=POSTS.map(function(p,i){
     return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
       '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
       '<div class="pf"><span class="readlink" onclick="openPost('+i+')">Read ↗</span>'+
       '<div class="share">'+shareButtons(i)+'</div></div></div></article>';
-  }).join('');
+  }).join('');})();
   function insuranceOptions(){/* insurance provider is now a free-text field — no payer list to populate */}
 
   /* ---------- Sharing (all platforms) ---------- */
@@ -711,6 +675,7 @@
 
   /* ---------- Booking ---------- */
   function openBook(){insuranceOptions();document.getElementById('bookOv').classList.add('show');document.getElementById('navLinks').classList.remove('open');}
+  function showJournal(scroll){var b=document.getElementById('blog');if(!b)return;b.style.display='';document.getElementById('navLinks').classList.remove('open');if(scroll!==false)setTimeout(function(){b.scrollIntoView({behavior:'smooth'});},60);}
   function closeBook(){document.getElementById('bookOv').classList.remove('show');}
   function setPay(m){
     document.getElementById('payMethod').value=m;
@@ -749,7 +714,7 @@
 
   /* deep-link to a post */
   applyCfg();
-  (function(){var m=(location.hash||'').match(/post-(\d+)/);if(m){openPost(+m[1]);}if((location.hash||'')==='#book'){openBook();}})();
+  (function(){if((location.hash||'')==='#book'){openBook();}})();
   // close modals on overlay click
   ['bookOv','postOv'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});});
 </script>
