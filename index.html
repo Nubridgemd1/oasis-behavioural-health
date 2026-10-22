@@ -96,6 +96,14 @@
   .spec:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 20px rgba(21,67,61,.09)}
   .spec img{width:100%;height:150px;object-fit:cover;display:block;background:var(--sage)}
   .spec span{display:block;padding:11px 13px;font-size:14px;color:var(--teal);font-weight:600}
+  .eval-feature{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;text-align:left;background:#fff;border:1px solid #e7e0d6;border-radius:18px;overflow:hidden;box-shadow:0 20px 44px rgba(44,76,59,.1);max-width:940px;margin:0 auto}
+  .eval-photo img{width:100%;height:100%;min-height:340px;object-fit:cover;display:block}
+  .eval-body{padding:40px 42px;display:flex;flex-direction:column;justify-content:center}
+  .eval-body .stars{color:#e0b24a;font-size:20px;letter-spacing:4px;margin-bottom:12px}
+  .eval-body h3{font-family:var(--serif);font-size:28px;color:#2c4c3b;margin-bottom:12px;line-height:1.15}
+  .eval-body p{color:#51615a;font-size:16px;margin-bottom:24px}
+  .eval-body .btn{align-self:flex-start}
+  @media(max-width:760px){.eval-feature{grid-template-columns:1fr}.eval-photo img{min-height:240px}}
   .reel-wrap{position:relative}
   .reel-nav{position:absolute;top:calc(50% - 14px);transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--teal);font-size:26px;line-height:1;cursor:pointer;box-shadow:0 7px 18px rgba(21,67,61,.18);transition:.2s;display:flex;align-items:center;justify-content:center}
   .reel-nav:hover{background:var(--gold);color:#fff;border-color:var(--gold);transform:translateY(-50%) scale(1.06)}
@@ -422,18 +430,27 @@
   </div>
 </section>
 
-<!-- SERVICES -->
+<!-- TREATMENTS: PSYCHIATRIC EVALUATIONS -->
 <section class="svc-bg" id="services">
   <div class="wrap center">
-    <span class="eyebrow">How We Can Help</span>
-    <h2 class="title">Services &amp; Specialties</h2>
-    <div class="grid3" style="text-align:left" id="svcGrid"></div>
-    <h3 class="subhead">Specialties we treat</h3>
-    <p class="subnote">Compassionate, evidence-based care across the concerns that bring people to Oasis. <span style="color:var(--gold-dk)">Swipe the reel →</span></p>
+    <span class="eyebrow">Treatments That Give Results</span>
+    <h2 class="title">Psychiatric Evaluations</h2>
+    <p class="body center" style="max-width:48em;margin:0 auto 34px">A thoughtful, compassionate evaluation is the foundation of effective care. We take the time to understand your history, symptoms, and goals &mdash; then craft a clear, personalized plan to guide your healing.</p>
+    <div class="eval-feature">
+      <div class="eval-photo"><img loading="lazy" alt="A compassionate psychiatric evaluation" src="https://images.pexels.com/photos/5699431/pexels-photo-5699431.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=760&h=640"></div>
+      <div class="eval-body">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3>Comprehensive Psychiatric Evaluations</h3>
+        <p>An in-depth look at your mental health &mdash; mood, anxiety, focus, sleep, and more &mdash; shaped into a thoughtful, personalized treatment plan. Unhurried, confidential, and centered on you.</p>
+        <a class="btn gold" href="psychiatric-evaluations.html">Learn More &rarr;</a>
+      </div>
+    </div>
+    <h3 class="subhead" style="margin-top:52px">Inside our evaluations</h3>
+    <p class="subnote">A look at the compassionate, evidence-based care that brings people to Oasis. <span style="color:var(--gold-dk)">Swipe the reel →</span></p>
     <div class="reel-wrap">
-      <button type="button" class="reel-nav prev" aria-label="Previous specialties" onclick="reelNudge(-1)">&#8249;</button>
+      <button type="button" class="reel-nav prev" aria-label="Previous" onclick="reelNudge(-1)">&#8249;</button>
       <div class="spec-reel"><div class="spec-track" id="specGrid"></div></div>
-      <button type="button" class="reel-nav next" aria-label="Next specialties" onclick="reelNudge(1)">&#8250;</button>
+      <button type="button" class="reel-nav next" aria-label="Next" onclick="reelNudge(1)">&#8250;</button>
     </div>
   </div>
 </section>
@@ -612,7 +629,7 @@
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
   /* ---------- Render ---------- */
-  document.getElementById('svcGrid').innerHTML=SERVICES.map(function(s){return '<div class="svc"><img class="svc-img" loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,620,420)+'"><div class="svc-body"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div></div>';}).join('');
+  (function(){var sg=document.getElementById('svcGrid');if(sg)sg.innerHTML=SERVICES.map(function(s){return '<div class="svc"><img class="svc-img" loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,620,420)+'"><div class="svc-body"><div class="ic">'+s.ic+'</div><h3>'+s.t+'</h3><p>'+s.d+'</p></div></div>';}).join('');})();
   (function(){var t=SPECIALTIES.map(function(s){return '<div class="spec"><img loading="lazy" alt="'+esc(s.t)+'" src="'+pexel(s.img,420,300)+'"><span>'+s.t+'</span></div>';}).join('');document.getElementById('specGrid').innerHTML=t+t;startSpecReel();})();
   function startSpecReel(){
     var reel=document.querySelector('.spec-reel'); if(!reel) return;
@@ -733,7 +750,7 @@
 
   /* deep-link to a post */
   applyCfg();
-  (function(){var m=(location.hash||'').match(/post-(\d+)/);if(m){openPost(+m[1]);}})();
+  (function(){var m=(location.hash||'').match(/post-(\d+)/);if(m){openPost(+m[1]);}if((location.hash||'')==='#book'){openBook();}})();
   // close modals on overlay click
   ['bookOv','postOv'].forEach(function(id){document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});});
 </script>
