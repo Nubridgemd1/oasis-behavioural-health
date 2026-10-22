@@ -74,8 +74,8 @@
 <!-- LOGIN GATE -->
 <div class="gate" id="gate">
   <div class="card">
-    <svg width="60" height="60" style="margin:0 auto 6px;display:block"><use href="#oasis-logo"/></svg>
-    <div class="b1">Oasis</div><div class="b2">Admin Console</div>
+    <img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" style="height:108px;width:auto;margin:0 auto 8px;display:block">
+    <div class="b2">Admin Console</div>
     <input id="pass" type="password" placeholder="Passcode" onkeydown="if(event.key==='Enter')login()">
     <button class="btn gold" style="width:100%;justify-content:center" onclick="login()">Enter</button>
     <p class="hint" style="margin-top:14px">Default passcode: <b>oasis2026</b> — change it under Settings.</p>
@@ -85,7 +85,7 @@
 <!-- APP -->
 <div id="app" style="display:none">
   <div class="top">
-    <span style="display:flex;align-items:center;gap:9px"><svg width="34" height="34" style="background:#fff;border-radius:50%"><use href="#oasis-logo"/></svg><span class="b1">Oasis Admin</span></span>
+    <span style="display:flex;align-items:center;gap:10px"><img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" style="height:46px;width:auto;background:#fff;border-radius:8px;padding:3px;display:block"><span class="b1">Admin</span></span>
     <div><a class="btn ghost sm" href="index.html" target="_blank">View site ↗</a> <button class="btn ghost sm" onclick="logout()">Lock</button></div>
   </div>
   <div class="tabs">
@@ -213,28 +213,40 @@
 
   /* ---- flyers ---- */
   var FLYERS=[
-    {bg:'linear-gradient(160deg,#1a73b5,#0f4e78)',ic:'🌿',script:'a calm place to heal',h:'Now Accepting New Clients',p:'Compassionate online psychiatry for anxiety, depression, ADHD, trauma & mood.',cta:'Book Today'},
-    {bg:'linear-gradient(160deg,#2a97d4,#176ba6)',ic:'💻',script:'from anywhere in Texas',h:'Online Psychiatry, Statewide',p:'Meet from your phone or laptop — private, secure, and convenient.',cta:'Start Online'},
-    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🏥',script:'simple & covered',h:'Insurance & Benefits',p:'Tell us your plan when you book — we&rsquo;ll verify your benefits, no charge to check.',cta:'Verify Benefits'},
-    {bg:'linear-gradient(160deg,#1f88c5,#15558a)',ic:'💊',script:'personalized care',h:'Medication Management',p:'Thoughtful, collaborative psychiatric care — never one-size-fits-all.',cta:'Learn More'},
-    {bg:'linear-gradient(160deg,#2a97d4,#1a73b5)',ic:'🌊',script:'you deserve calm',h:'Anxiety & Depression Care',p:'Evidence-based treatment to help you feel like yourself again.',cta:'Reach Out'},
-    {bg:'linear-gradient(160deg,#2f8fcf,#1a73b5)',ic:'⚡',script:'focus & clarity',h:'Adult & Teen ADHD',p:'Accurate evaluation and treatment for focus, follow-through & calm.',cta:'Book an Eval'},
-    {bg:'linear-gradient(160deg,#1a73b5,#0f4e78)',ic:'✨',script:'care in minutes',h:'Book in Just a Few Taps',p:'New-client appointments are quick and easy to schedule online.',cta:'Book Now'},
-    {bg:'linear-gradient(160deg,#2a97d4,#176ba6)',ic:'💛',script:'care for everyone',h:'Sliding Scale Available',p:'Private-pay options and HSA/FSA accepted. Care that fits your life.',cta:'Ask Us How'},
-    {bg:'linear-gradient(160deg,#146a9e,#0e4a71)',ic:'🕊️',script:'mental health is health',h:'It’s Okay to Ask for Help',p:'Reaching out is strength. A warm, nonjudgmental space is waiting.',cta:'Start Today'},
-    {bg:'linear-gradient(160deg,#1f88c5,#15558a)',ic:'👩🏽‍⚕️',script:'meet your provider',h:'Lynda Agbai, PMHNP-BC',p:'Board-certified Psychiatric Mental Health Nurse Practitioner (APRN, PMHNP-BC).',cta:'View Profile'}
+    {bg:'linear-gradient(160deg,#2c4c3b,#1b3327)',ic:'🌿',script:'a calm place to heal',h:'Now Accepting New Clients',p:'Compassionate online psychiatry for anxiety, depression, ADHD, trauma & mood.',cta:'Book Today'},
+    {bg:'linear-gradient(160deg,#3c6a4f,#2c4c3b)',ic:'💻',script:'from anywhere in Texas',h:'Online Psychiatry, Statewide',p:'Meet from your phone or laptop — private, secure, and convenient.',cta:'Start Online'},
+    {bg:'linear-gradient(160deg,#274a38,#16301f)',ic:'🏥',script:'simple & covered',h:'Insurance & Benefits',p:'Tell us your plan when you book — we&rsquo;ll verify your benefits, no charge to check.',cta:'Verify Benefits'},
+    {bg:'linear-gradient(160deg,#315a42,#1f3c2c)',ic:'💊',script:'personalized care',h:'Medication Management',p:'Thoughtful, collaborative psychiatric care — never one-size-fits-all.',cta:'Learn More'},
+    {bg:'linear-gradient(160deg,#3c6a4f,#24402f)',ic:'🌊',script:'you deserve calm',h:'Anxiety & Depression Care',p:'Evidence-based treatment to help you feel like yourself again.',cta:'Reach Out'},
+    {bg:'linear-gradient(160deg,#2c4c3b,#3c6a4f)',ic:'⚡',script:'focus & clarity',h:'Adult & Teen ADHD',p:'Accurate evaluation and treatment for focus, follow-through & calm.',cta:'Book an Eval'},
+    {bg:'linear-gradient(160deg,#2c4c3b,#1b3327)',ic:'✨',script:'care in minutes',h:'Book in Just a Few Taps',p:'New-client appointments are quick and easy to schedule online.',cta:'Book Now'},
+    {bg:'linear-gradient(160deg,#355f46,#223e2e)',ic:'💛',script:'care for everyone',h:'Sliding Scale Available',p:'Private-pay options and HSA/FSA accepted. Care that fits your life.',cta:'Ask Us How'},
+    {bg:'linear-gradient(160deg,#274a38,#16301f)',ic:'🕊️',script:'mental health is health',h:'It’s Okay to Ask for Help',p:'Reaching out is strength. A warm, nonjudgmental space is waiting.',cta:'Start Today'},
+    {bg:'linear-gradient(160deg,#315a42,#1f3c2c)',ic:'👩🏽‍⚕️',script:'meet your provider',h:'Lynda Agbai, PMHNP-BC',p:'Board-certified Psychiatric Mental Health Nurse Practitioner (APRN, PMHNP-BC).',cta:'View Profile'}
   ];
-  function renderFlyers(){var c=getCfg();
-    document.getElementById('flyerGrid').innerHTML=FLYERS.map(function(f,i){
+  function getFlyers(){var base=FLYERS.map(function(f){return Object.assign({},f);});try{var s=JSON.parse(localStorage.getItem('oasis_flyers')||'null');if(s)s.forEach(function(o,i){if(o&&base[i])Object.assign(base[i],o);});}catch(e){}return base;}
+  function renderFlyers(){var c=getCfg();var F=getFlyers();
+    document.getElementById('flyerGrid').innerHTML=F.map(function(f,i){
       return '<div class="flyer-wrap"><div class="flyer" id="fly'+i+'" style="background:'+f.bg+'"><div class="inner">'+
-        '<div><div class="fscript">'+f.script+'</div><div class="fbrand">Oasis Behavioral Health</div></div>'+
-        '<div class="fmid"><div class="ficon">'+f.ic+'</div><h3>'+f.h+'</h3><p>'+f.p+'</p><span class="fcta">'+f.cta+'</span></div>'+
+        '<div><div class="fscript" id="flys'+i+'">'+esc(f.script)+'</div><div class="fbrand">Oasis Behavioral Health</div></div>'+
+        '<div class="fmid"><div class="ficon">'+f.ic+'</div><h3 id="flyh'+i+'">'+esc(f.h)+'</h3><p id="flyp'+i+'">'+esc(f.p)+'</p><span class="fcta" id="flyc'+i+'">'+esc(f.cta)+'</span></div>'+
         '<div class="ffoot">'+esc(c.phone)+' &nbsp;·&nbsp; oasisbehaviouralhealth.com</div>'+
         '</div></div>'+
         '<div class="flyer-actions"><button class="btn gold sm" onclick="dlFlyer('+i+')">⬇ Download</button>'+
-        '<button class="btn ghost sm" onclick="shareFlyer('+i+')">Share</button></div></div>';
+        '<button class="btn ghost sm" onclick="shareFlyer('+i+')">Share</button>'+
+        '<button class="btn ghost sm" onclick="toggleEdit('+i+')">✎ Edit</button></div>'+
+        '<div id="flyed'+i+'" style="display:none;margin-top:10px;background:var(--sage);border:1px solid var(--line);border-radius:6px;padding:12px">'+
+          '<div class="field"><label>Eyebrow</label><input value="'+esc(f.script)+'" oninput="flyerEdit('+i+',\'script\',this.value)"></div>'+
+          '<div class="field"><label>Headline</label><input value="'+esc(f.h)+'" oninput="flyerEdit('+i+',\'h\',this.value)"></div>'+
+          '<div class="field"><label>Text</label><textarea rows="2" oninput="flyerEdit('+i+',\'p\',this.value)">'+esc(f.p)+'</textarea></div>'+
+          '<div class="field" style="margin:0"><label>Button</label><input value="'+esc(f.cta)+'" oninput="flyerEdit('+i+',\'cta\',this.value)"></div>'+
+        '</div></div>';
     }).join('');
   }
+  function toggleEdit(i){var e=document.getElementById('flyed'+i);e.style.display=(e.style.display==='none')?'block':'none';}
+  function flyerEdit(i,field,val){var arr=[];try{arr=JSON.parse(localStorage.getItem('oasis_flyers')||'[]');}catch(e){}arr[i]=arr[i]||{};arr[i][field]=val;localStorage.setItem('oasis_flyers',JSON.stringify(arr));
+    var map={script:'flys',h:'flyh',p:'flyp',cta:'flyc'};var el=document.getElementById(map[field]+i);if(el)el.textContent=val;}
+  function resetFlyers(){if(confirm('Reset all flyers to the default text?')){localStorage.removeItem('oasis_flyers');renderFlyers();toast('Flyers reset');}}
   function dlFlyer(i){var el=document.getElementById('fly'+i);toast('Rendering flyer…');
     html2canvas(el,{scale:3,backgroundColor:null,useCORS:true}).then(function(canvas){
       var a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='oasis-flyer-'+(i+1)+'.png';document.body.appendChild(a);a.click();a.remove();toast('Flyer downloaded');
