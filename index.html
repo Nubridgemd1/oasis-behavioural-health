@@ -386,7 +386,7 @@
   <div class="wrap"><div class="hero-content">
     <span class="eyebrow">A Calm Place to Heal &middot; Online Psychiatry in Texas</span>
     <h1>Compassionate Care.<br>Renewed Balance.<br>A Healthier You.</h1>
-    <p class="lede" id="heroBio">Evidence-based online psychiatry and medication management with <b id="heroName">Lynda Chinyere Agbai, APRN, PMHNP-BC</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.</p>
+    <p class="lede" id="heroBio">Oasis Behavioral Health Care provides evidence-based online psychiatric care and medication management in a warm, welcoming, and judgment-free environment. We support individuals navigating anxiety, depression, ADHD, trauma-related conditions, and mood disorders through personalized treatment tailored to their unique needs.<br><br>Our goal is to help you feel heard, understood, and empowered on your journey toward emotional wellness.<br><br>Convenient online psychiatric care for individuals in Texas, Washington, New York, and New Mexico.</p>
     <div class="hero-cta">
       <a href="#" class="btn gold" onclick="openBook();return false">Book an Appointment</a>
       <a href="#" class="btn ghost light" id="callBtn" onclick="callNow();return false">Call (346) 253-3485</a>
@@ -577,8 +577,7 @@
 
   /* ---------- Apply config ---------- */
   function applyCfg(){
-    document.getElementById('heroName').textContent=CFG.providerName;
-    document.getElementById('heroBio').innerHTML='Evidence-based online psychiatry and medication management with <b id="heroName">'+esc(CFG.providerName)+'</b> — a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Licensed in Texas, with telehealth across Washington, New York &amp; New Mexico.';
+    /* hero paragraph is static copy; not overwritten here */
     var _f=document.getElementById('fName');if(_f)_f.textContent=CFG.providerName;
     var _c=document.getElementById('capName');if(_c)_c.textContent=CFG.shortName;
     var _a=document.getElementById('aboutBio');if(_a)_a.textContent=CFG.bio;
