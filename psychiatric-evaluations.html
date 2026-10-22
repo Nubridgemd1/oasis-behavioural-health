@@ -22,6 +22,9 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   section{padding:80px 0}
   .center{text-align:center}
+  /* flip-open reveal (each section flips open; motion-safe) */
+  .reveal-js section{opacity:0;transform:perspective(1300px) rotateX(-15deg);transform-origin:top center;transition:opacity .7s ease,transform .8s cubic-bezier(.2,.75,.2,1);backface-visibility:hidden}
+  .reveal-js section.in{opacity:1;transform:none}
   .eyebrow{font-family:var(--sans);text-transform:uppercase;letter-spacing:.3em;font-size:12px;font-weight:700;color:var(--sage)}
   .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14.5px;padding:14px 28px;border-radius:3px;border:1.5px solid transparent;cursor:pointer;transition:.2s}
   .btn.gold{background:var(--green);color:#fff}.btn.gold:hover{background:var(--green2)}
@@ -37,7 +40,7 @@
   /* HERO (moving picture) */
   .hero{position:relative;overflow:hidden;background:var(--green2)}
   @keyframes ken{0%{transform:scale(1.08) translate(1.6%,1%)}100%{transform:scale(1.2) translate(-2.6%,-1.6%)}}
-  .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/5699431/pexels-photo-5699431.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop') 50% 32%/cover no-repeat;transform:scale(1.08);animation:ken 16s ease-in-out infinite alternate;will-change:transform}
+  .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop') 52% 26%/cover no-repeat;transform:scale(1.08);animation:ken 16s ease-in-out infinite alternate;will-change:transform}
   @media(prefers-reduced-motion:reduce){.hero-photo{animation:none;transform:scale(1.04)}}
   .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,42,32,.86),rgba(26,42,32,.55) 60%,rgba(26,42,32,.35))}
   .hero-in{position:relative;z-index:2;max-width:640px;padding:96px 0 104px;color:#fff}
@@ -86,6 +89,7 @@
   }
   @media(max-width:560px){.brandlogo{height:88px}.nav-in{height:104px}.nav-links{inset:104px 0 auto 0}section{padding:60px 0}}
 </style>
+<script>try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('reveal-js');}catch(e){}</script>
 </head>
 <body>
 
@@ -128,7 +132,7 @@
       <p class="body">A psychiatric evaluation is a thoughtful conversation and assessment that helps us understand what you are experiencing &mdash; your mood, anxiety, focus, sleep, history, and goals. It is the first and most important step toward care that truly fits you.</p>
       <p class="body">With <b>Lynda Chinyere Agbai, APRN, PMHNP-BC</b>, there is no rushing and no judgment &mdash; just a safe space to be heard, and a clear, personalized plan when you leave.</p>
     </div>
-    <div class="shot"><img loading="lazy" alt="A compassionate psychiatric evaluation" src="https://images.pexels.com/photos/4098224/pexels-photo-4098224.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=760&h=760"></div>
+    <div class="shot"><img loading="lazy" alt="A compassionate psychiatric evaluation" src="https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=760&h=720"></div>
   </div>
 </section>
 
@@ -210,7 +214,7 @@
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
   function pexel(id){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=420';}
-  var PICS=[5699431,7579831,5699456,4098224,3769021,6787202,2379005,762020,8441775,5452293];
+  var PICS=[7579831,5407206,5325840,7659874,3931633,5699456,5452293,8441775,2379005,762020];
   (function(){
     var t=PICS.map(function(id){return '<div class="tile"><img loading="lazy" alt="Oasis evaluation" src="'+pexel(id)+'"></div>';}).join('');
     var track=document.getElementById('reel'); track.innerHTML=t+t;
@@ -221,6 +225,20 @@
     reel.addEventListener('touchstart',function(){paused=true;},{passive:true}); reel.addEventListener('touchend',function(){setTimeout(function(){paused=false;},2200);});
     var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     (function step(){if(half>0){if(!reduce&&!paused)reel.scrollLeft+=0.6;if(reel.scrollLeft>=half)reel.scrollLeft-=half;else if(reel.scrollLeft<0)reel.scrollLeft+=half;}requestAnimationFrame(step);})();
+  })();
+
+  /* flip-open reveal: hero flips in on load, sections flip open as they enter */
+  (function(){
+    if(!document.documentElement.classList.contains('reveal-js'))return;
+    var secs=[].slice.call(document.querySelectorAll('section'));
+    function reveal(el){el.classList.add('in');}
+    setTimeout(function(){secs.forEach(reveal);},1600); /* safety: never leave hidden */
+    function inView(el){var r=el.getBoundingClientRect();return r.top<(window.innerHeight*0.9)&&r.bottom>0;}
+    secs.forEach(function(s){if(inView(s))reveal(s);});
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){reveal(e.target);io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -6% 0px'});
+      secs.forEach(function(s){io.observe(s);});
+    } else { secs.forEach(reveal); }
   })();
 </script>
 </body>
