@@ -90,6 +90,7 @@
   </div>
   <div class="tabs">
     <button class="on" data-t="update" onclick="tab('update')">Update</button>
+    <button data-t="journal" onclick="tab('journal')">Journal</button>
     <button data-t="kit" onclick="tab('kit')">Marketing Kit</button>
     <button data-t="flyers" onclick="tab('flyers')">Flyers</button>
     <button data-t="bookings" onclick="tab('bookings')">Bookings</button>
@@ -123,6 +124,16 @@
       </div>
       <button class="btn gold" onclick="saveCfg()">Save changes</button>
       <button class="btn ghost" onclick="resetCfg()">Reset to defaults</button>
+    </div>
+
+    <!-- JOURNAL -->
+    <div class="panel" id="p-journal">
+      <div class="pcard">
+        <h2>The Journal</h2>
+        <div class="sub">Edit, add, or remove blog posts. Changes appear on your Journal page (on this device). <b>Body</b> accepts simple HTML like &lt;p&gt;…&lt;/p&gt; and &lt;h4&gt;…&lt;/h4&gt;.</div>
+        <div id="postList"></div>
+        <div style="margin-top:6px"><button class="btn ghost" onclick="addPost()">+ Add post</button> <button class="btn gold" onclick="savePosts()">Save journal</button> <button class="btn ghost" onclick="resetPosts()">Reset to defaults</button></div>
+      </div>
     </div>
 
     <!-- MARKETING KIT -->
@@ -182,7 +193,7 @@
   function changePass(){if(document.getElementById('curPass').value!==passHash()){toast('Current passcode is wrong');return;}var n=document.getElementById('newPass').value.trim();if(n.length<4){toast('Use at least 4 characters');return;}localStorage.setItem('oasis_pass',n);document.getElementById('curPass').value='';document.getElementById('newPass').value='';toast('Passcode updated');}
 
   /* ---- tabs ---- */
-  function tab(t){document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t);});if(t==='bookings')renderBookings();}
+  function tab(t){document.querySelectorAll('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});document.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t);});if(t==='bookings')renderBookings();if(t==='journal')renderPosts();}
 
   /* ---- update ---- */
   function loadAll(){var c=getCfg();
@@ -247,6 +258,33 @@
   function flyerEdit(i,field,val){var arr=[];try{arr=JSON.parse(localStorage.getItem('oasis_flyers')||'[]');}catch(e){}arr[i]=arr[i]||{};arr[i][field]=val;localStorage.setItem('oasis_flyers',JSON.stringify(arr));
     var map={script:'flys',h:'flyh',p:'flyp',cta:'flyc'};var el=document.getElementById(map[field]+i);if(el)el.textContent=val;}
   function resetFlyers(){if(confirm('Reset all flyers to the default text?')){localStorage.removeItem('oasis_flyers');renderFlyers();toast('Flyers reset');}}
+
+  /* ---- journal editor ---- */
+  var DEFAULT_POSTS=[
+    {cat:'Medication',ic:'💊',t:'Starting Psychiatric Medication: What to Really Expect',ex:'The honest, judgment-free guide to beginning medication — timelines, side effects, and how we adjust together.',body:'<p>Deciding to start a psychiatric medication can feel huge. Here is what the first few weeks usually look like, and why patience and partnership matter.</p><h4>It is a collaboration, not a prescription pad</h4><p>We start low, go slow, and check in often. Your feedback is the most important data we have.</p><h4>Give it a fair window</h4><p>Many medications take 2–6 weeks to show their full benefit. Early side effects often ease as your body adjusts.</p><h4>You are never stuck</h4><p>If something is not working, we change it. The goal is you feeling like yourself — not any particular pill.</p>'},
+    {cat:'Anxiety',ic:'🌊',t:'5 Grounding Techniques to Calm Anxiety in 60 Seconds',ex:'Simple, science-backed tools you can use anywhere when anxiety spikes — no app required.',body:'<p>When anxiety surges, your nervous system needs a signal of safety. These quick techniques help.</p><h4>1. 5-4-3-2-1 senses</h4><p>Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.</p><h4>2. Box breathing</h4><p>Inhale 4, hold 4, exhale 4, hold 4. Repeat four times.</p><h4>3. Cold water</h4><p>Splash your face or hold something cold.</p><h4>4. Name it</h4><p>"This is anxiety, and it will pass." Labeling lowers its intensity.</p><h4>5. Move</h4><p>A brisk 2-minute walk burns off stress hormones.</p>'},
+    {cat:'ADHD',ic:'⚡',t:'Adult ADHD Is Not "Just Being Distracted"',ex:'Why so many adults — especially women — are diagnosed late, and what real treatment looks like.',body:'<p>ADHD in adults often hides behind years of coping, masking, and self-blame. It is far more than distraction.</p><h4>Common signs</h4><p>Chronic lateness, unfinished projects, emotional overwhelm, time blindness, and exhausting mental effort to stay organized.</p><h4>Why late diagnosis is common</h4><p>Many adults were never evaluated as children. Treatment can be genuinely life-changing.</p><h4>What helps</h4><p>A combination of medication, structure, and self-compassion. You are not lazy — your brain is wired differently.</p>'},
+    {cat:'Depression',ic:'🌱',t:'When It’s More Than a Bad Week: Recognizing Depression',ex:'How to tell ordinary low mood from clinical depression — and when to reach out.',body:'<p>Everyone has hard days. Depression is different — it lingers and dims the things you used to enjoy.</p><h4>Watch for two weeks or more of</h4><p>Low mood, loss of interest, changes in sleep or appetite, fatigue, guilt, trouble concentrating, or hopelessness.</p><h4>It is not weakness</h4><p>Depression is a medical condition with effective treatment. Reaching out is strength, not failure.</p>'},
+    {cat:'Sleep',ic:'🌙',t:'Sleep and Mental Health: The Two-Way Street',ex:'Poor sleep worsens anxiety and depression — and vice versa. Here is how to break the cycle.',body:'<p>Sleep and mood feed each other. Improving one often improves the other.</p><h4>Protect your wind-down</h4><p>Dim lights an hour before bed; keep screens out of the bedroom.</p><h4>Keep a rhythm</h4><p>Same wake time every day anchors your body clock.</p><h4>When to seek help</h4><p>If sleep problems persist for weeks, they may be part of an underlying condition we can treat.</p>'},
+    {cat:'Women’s Health',ic:'🌸',t:'Hormones, Mood, and Women’s Mental Health',ex:'From PMS to postpartum to perimenopause — how hormonal shifts shape mood, and what helps.',body:'<p>Hormonal transitions can profoundly affect mood, anxiety, and sleep. You deserve care that takes that seriously.</p><h4>Key windows</h4><p>Premenstrual, pregnancy and postpartum, and perimenopause are common times for mood changes.</p><h4>You are not "too sensitive"</h4><p>These are real, treatable shifts — with options tailored to each stage of life.</p>'},
+    {cat:'Burnout',ic:'🔥',t:'Burnout vs. Depression: How to Tell the Difference',ex:'They overlap — but need different responses. A clear, practical breakdown.',body:'<p>Burnout and depression can look alike, yet they call for different care.</p><h4>Burnout</h4><p>Tied to chronic stress (often work). Rest, boundaries, and change in demands help most.</p><h4>Depression</h4><p>Pervasive and present across all areas of life, even away from stressors. Often needs clinical treatment.</p><h4>Why it matters</h4><p>Naming it correctly points you to the right relief.</p>'},
+    {cat:'Trauma',ic:'🕊️',t:'Healing After Trauma: Small Steps That Matter',ex:'Trauma recovery is not linear. Gentle, realistic ways to rebuild safety.',body:'<p>Healing from trauma is not about "getting over it." It is about feeling safe in your body and life again.</p><h4>Go at your pace</h4><p>There is no timeline. Small, consistent steps build lasting safety.</p><h4>Regulate first</h4><p>Grounding and breathwork calm the nervous system before deeper processing.</p><h4>You do not have to do it alone</h4><p>Support — and sometimes medication — can make the work feel possible.</p>'},
+    {cat:'Stigma',ic:'💛',t:'Breaking the Stigma Around Psychiatric Medication',ex:'Taking medication for your mind is as valid as treating any other part of your health.',body:'<p>Needing support for your mental health is human. Medication is one valid, effective tool among many.</p><h4>It does not change who you are</h4><p>The right medication helps you be more yourself, not less.</p><h4>Asking for help is strength</h4><p>You would treat a thyroid or your blood pressure. Your brain deserves the same care.</p>'},
+    {cat:'Telehealth',ic:'💻',t:'Is Online Psychiatry Right for You?',ex:'What to expect from virtual visits — and why so many people prefer them.',body:'<p>Online psychiatry brings expert care to wherever you feel most comfortable.</p><h4>Convenient &amp; private</h4><p>No commute, no waiting room — just a secure, confidential video visit.</p><h4>Just as effective</h4><p>Research shows telepsychiatry works as well as in-person for most conditions.</p><h4>Getting started is simple</h4><p>Book, complete a short intake, and meet from your phone or computer.</p>'}
+  ];
+  function getPosts(){try{var s=JSON.parse(localStorage.getItem('oasis_posts')||'null');if(s&&s.length)return s;}catch(e){}return DEFAULT_POSTS.map(function(p){return Object.assign({},p);});}
+  function renderPosts(){var P=getPosts();document.getElementById('postList').innerHTML=P.map(function(p,i){
+    return '<div class="pcard" style="background:var(--sage)"><div class="row2"><div class="field"><label>Category</label><input id="pt_cat'+i+'" value="'+esc(p.cat)+'"></div><div class="field"><label>Icon (emoji)</label><input id="pt_ic'+i+'" value="'+esc(p.ic)+'"></div></div>'+
+      '<div class="field"><label>Title</label><input id="pt_t'+i+'" value="'+esc(p.t)+'"></div>'+
+      '<div class="field"><label>Excerpt (card summary)</label><textarea id="pt_ex'+i+'" rows="2">'+esc(p.ex)+'</textarea></div>'+
+      '<div class="field"><label>Body (HTML)</label><textarea id="pt_body'+i+'" rows="5">'+esc(p.body)+'</textarea></div>'+
+      '<button class="btn ghost sm" onclick="delPost('+i+')">Delete post</button></div>';
+  }).join('');}
+  function collectPosts(){var P=getPosts(),out=[];for(var i=0;i<P.length;i++){var cat=document.getElementById('pt_cat'+i);if(!cat)continue;out.push({cat:cat.value.trim(),ic:document.getElementById('pt_ic'+i).value.trim(),t:document.getElementById('pt_t'+i).value.trim(),ex:document.getElementById('pt_ex'+i).value.trim(),body:document.getElementById('pt_body'+i).value});}return out;}
+  function addPost(){var P=collectPosts();P.push({cat:'New',ic:'📝',t:'New article title',ex:'A short summary of the article.',body:'<p>Write your article here. Use &lt;h4&gt; for subheadings and &lt;p&gt; for paragraphs.</p>'});localStorage.setItem('oasis_posts',JSON.stringify(P));renderPosts();toast('Post added');}
+  function delPost(i){var P=collectPosts();P.splice(i,1);localStorage.setItem('oasis_posts',JSON.stringify(P));renderPosts();toast('Post deleted');}
+  function savePosts(){localStorage.setItem('oasis_posts',JSON.stringify(collectPosts()));toast('Journal saved — your Journal page is updated');}
+  function resetPosts(){if(confirm('Reset the journal to the default articles?')){localStorage.removeItem('oasis_posts');renderPosts();toast('Journal reset');}}
   function dlFlyer(i){var el=document.getElementById('fly'+i);toast('Rendering flyer…');
     html2canvas(el,{scale:3,backgroundColor:null,useCORS:true}).then(function(canvas){
       var a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='oasis-flyer-'+(i+1)+'.png';document.body.appendChild(a);a.click();a.remove();toast('Flyer downloaded');

@@ -159,7 +159,7 @@
 
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
-  var POSTS=[
+  var DEFAULT_POSTS=[
     {cat:'Medication',ic:'💊',t:'Starting Psychiatric Medication: What to Really Expect',ex:'The honest, judgment-free guide to beginning medication — timelines, side effects, and how we adjust together.',
       body:'<p>Deciding to start a psychiatric medication can feel huge. Here is what the first few weeks usually look like, and why patience and partnership matter.</p><h4>It is a collaboration, not a prescription pad</h4><p>We start low, go slow, and check in often. Your feedback is the most important data we have.</p><h4>Give it a fair window</h4><p>Many medications take 2–6 weeks to show their full benefit. Early side effects often ease as your body adjusts.</p><h4>You are never stuck</h4><p>If something is not working, we change it. The goal is <em>you</em> feeling like yourself — not any particular pill.</p>'},
     {cat:'Anxiety',ic:'🌊',t:'5 Grounding Techniques to Calm Anxiety in 60 Seconds',ex:'Simple, science-backed tools you can use anywhere when anxiety spikes — no app required.',
@@ -181,6 +181,7 @@
     {cat:'Telehealth',ic:'💻',t:'Is Online Psychiatry Right for You?',ex:'What to expect from virtual visits — and why so many people prefer them.',
       body:'<p>Online psychiatry brings expert care to wherever you feel most comfortable.</p><h4>Convenient &amp; private</h4><p>No commute, no waiting room — just a secure, confidential video visit.</p><h4>Just as effective</h4><p>Research shows telepsychiatry works as well as in-person for most conditions.</p><h4>Getting started is simple</h4><p>Book, complete a short intake, and meet from your phone or computer.</p>'}
   ];
+  var POSTS=(function(){try{var s=JSON.parse(localStorage.getItem('oasis_posts')||'null');if(s&&s.length)return s;}catch(e){}return DEFAULT_POSTS;})();
   function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2600);}
   function postUrl(i){return location.origin+location.pathname+'#post-'+i;}
   function shareButtons(i){return '<button title="Share" onclick="nativeShare('+i+')">⇪</button><button title="Facebook" onclick="shareTo(\'fb\','+i+')">f</button><button title="X" onclick="shareTo(\'x\','+i+')">𝕏</button><button title="WhatsApp" onclick="shareTo(\'wa\','+i+')">✆</button>';}
