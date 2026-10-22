@@ -42,12 +42,13 @@
   .center{text-align:center}
   /* NAV */
   header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:156px}
+  .brandlogo{height:140px;width:auto;display:block}
   .brand{display:flex;flex-direction:column;line-height:1}
   .brand .b1{font-family:var(--script);font-size:48px;color:var(--teal);line-height:.85;-webkit-text-stroke:.7px var(--teal);text-stroke:.7px var(--teal)}
   .brand .b2{font-family:var(--sans);font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dk);margin-top:-2px;padding-left:3px}
   .nav-links{display:flex;align-items:center;gap:30px}
-  .nav-links a{font-size:13.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:400}
+  .nav-links a{font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);font-weight:700}
   .nav-links a:hover{color:var(--gold-dk)}
   .nav-toggle{display:none;background:none;border:none;font-size:26px;color:var(--teal);cursor:pointer}
   /* HERO */
@@ -166,14 +167,15 @@
     .two,.pay-grid{grid-template-columns:1fr;gap:34px}
     .grid3,.blog-grid{grid-template-columns:1fr 1fr}
     .spec-grid{grid-template-columns:repeat(3,1fr)}
-    .nav-links{position:fixed;inset:88px 0 auto 0;background:var(--bg);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
+    .nav-links{position:fixed;inset:156px 0 auto 0;background:var(--bg);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
     .nav-links.open{display:flex}
     .nav-links a{width:100%;padding:16px 24px;border-top:1px solid var(--line)}
     .nav-links .btn{margin:14px 24px;justify-content:center}
     .nav-toggle{display:block}
     footer .fgrid{grid-template-columns:1fr}
   }
-  @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr 1fr}section{padding:62px 0}}
+  @media(max-width:560px){.grid3,.blog-grid{grid-template-columns:1fr}.spec-grid{grid-template-columns:1fr 1fr}section{padding:62px 0}
+    .brandlogo{height:96px}.nav-in{height:112px}.nav-links{inset:112px 0 auto 0}}
 
   .emblem{flex:none;border-radius:50%;filter:drop-shadow(0 1px 2px rgba(20,66,95,.18))}
   /* ===== Bright blue + green theme (medical) ===== */
@@ -338,7 +340,7 @@
 <!-- NAV -->
 <header class="nav">
   <div class="wrap nav-in">
-    <a href="#top" class="brand" aria-label="Oasis Behavioral Health home"><img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" style="height:76px;width:auto;display:block"></a>
+    <a href="#top" class="brand" aria-label="Oasis Behavioral Health home"><img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" class="brandlogo"></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#services">Services</a>
