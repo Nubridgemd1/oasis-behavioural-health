@@ -40,6 +40,7 @@
   /* HERO (moving picture) */
   .hero{position:relative;overflow:hidden;background:var(--green2)}
   @keyframes ken{0%{transform:scale(1.08) translate(1.6%,1%)}100%{transform:scale(1.2) translate(-2.6%,-1.6%)}}
+  @keyframes kenM{0%{transform:scale(1.03)}100%{transform:scale(1.09)}}
   .hero-photo{position:absolute;inset:0;background:url('https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1000&fit=crop') 52% 26%/cover no-repeat;transform:scale(1.08);animation:ken 16s ease-in-out infinite alternate;will-change:transform}
   @media(prefers-reduced-motion:reduce){.hero-photo{animation:none;transform:scale(1.04)}}
   .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,42,32,.86),rgba(26,42,32,.55) 60%,rgba(26,42,32,.35))}
@@ -88,6 +89,11 @@
     footer .fgrid{grid-template-columns:1fr}
   }
   @media(max-width:560px){.brandlogo{height:88px}.nav-in{height:104px}.nav-links{inset:104px 0 auto 0}section{padding:60px 0}}
+  @media(max-width:760px){
+    .hero-photo{background-position:40% 20%;animation-name:kenM;background-size:cover}
+    .hero-overlay{background:linear-gradient(180deg,rgba(20,33,25,.72) 0%,rgba(20,33,25,.34) 42%,rgba(20,33,25,.32) 70%,rgba(20,33,25,.52) 100%)}
+    .hero-in{padding:72px 0 64px}
+  }
 </style>
 <script>try{if(window.matchMedia&&matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('reveal-js');}catch(e){}</script>
 </head>
