@@ -214,7 +214,7 @@
 <script>
   document.getElementById('yr').textContent=new Date().getFullYear();
   function pexel(id){return 'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=600&h=420';}
-  var PICS=[7579831,5407206,5325840,7659874,3931633,5699456,5452293,8441775,2379005,762020];
+  var PICS=[7579831,5325840,7659874,7709087,6129507,3931633,3153201,5699844,5407206,5452293];
   (function(){
     var t=PICS.map(function(id){return '<div class="tile"><img loading="lazy" alt="Oasis evaluation" src="'+pexel(id)+'"></div>';}).join('');
     var track=document.getElementById('reel'); track.innerHTML=t+t;
