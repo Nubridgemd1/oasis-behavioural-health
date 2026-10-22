@@ -42,7 +42,7 @@
   .center{text-align:center}
   /* NAV */
   header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:88px}
   .brand{display:flex;flex-direction:column;line-height:1}
   .brand .b1{font-family:var(--script);font-size:48px;color:var(--teal);line-height:.85;-webkit-text-stroke:.7px var(--teal);text-stroke:.7px var(--teal)}
   .brand .b2{font-family:var(--sans);font-size:9.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold-dk);margin-top:-2px;padding-left:3px}
@@ -166,7 +166,7 @@
     .two,.pay-grid{grid-template-columns:1fr;gap:34px}
     .grid3,.blog-grid{grid-template-columns:1fr 1fr}
     .spec-grid{grid-template-columns:repeat(3,1fr)}
-    .nav-links{position:fixed;inset:74px 0 auto 0;background:var(--bg);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
+    .nav-links{position:fixed;inset:88px 0 auto 0;background:var(--bg);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
     .nav-links.open{display:flex}
     .nav-links a{width:100%;padding:16px 24px;border-top:1px solid var(--line)}
     .nav-links .btn{margin:14px 24px;justify-content:center}
@@ -338,7 +338,7 @@
 <!-- NAV -->
 <header class="nav">
   <div class="wrap nav-in">
-    <a href="#top" class="brand" style="flex-direction:row;align-items:center;gap:11px"><svg class="emblem" width="50" height="50"><use href="#oasis-logo"/></svg><span style="display:flex;flex-direction:column;line-height:.86"><span class="b1">Oasis</span><span class="b2">Behavioral Health</span></span></a>
+    <a href="#top" class="brand" aria-label="Oasis Behavioral Health home"><img src="assets/oasis-logo-nav.png" alt="Oasis Behavioral Health" style="height:76px;width:auto;display:block"></a>
     <nav class="nav-links" id="navLinks">
       <a href="#about">About</a>
       <a href="#services">Services</a>
