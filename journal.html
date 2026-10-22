@@ -200,13 +200,21 @@
       '<button onclick="shareTo(\'fb\','+i+')">f Facebook</button><button onclick="shareTo(\'x\','+i+')">𝕏 Post</button><button onclick="shareTo(\'li\','+i+')">in LinkedIn</button><button onclick="shareTo(\'wa\','+i+')">✆ WhatsApp</button><button onclick="copyLink('+i+')">🔗 Copy link</button><button onclick="emailShare('+i+')">✉ Email</button></div>';
     document.getElementById('postOv').classList.add('show');
   }
-  document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
-    return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
-      '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
-      '<div class="pf"><span class="readlink" onclick="openPost('+i+')">Read ↗</span><div class="share">'+shareButtons(i)+'</div></div></div></article>';
-  }).join('');
+  function renderBlog(){
+    document.getElementById('blogGrid').innerHTML=POSTS.map(function(p,i){
+      return '<article class="post"><div class="ph">'+p.ic+'</div><div class="pc"><div class="cat">'+p.cat+'</div>'+
+        '<h3 onclick="openPost('+i+')">'+p.t+'</h3><p>'+p.ex+'</p>'+
+        '<div class="pf"><span class="readlink" onclick="openPost('+i+')">Read ↗</span><div class="share">'+shareButtons(i)+'</div></div></div></article>';
+    }).join('');
+  }
+  renderBlog();
   document.getElementById('postOv').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
-  (function(){var m=(location.hash||'').match(/post-(\d+)/);if(m&&POSTS[+m[1]]){openPost(+m[1]);}})();
+  function deepLink(){var m=(location.hash||'').match(/post-(\d+)/);if(m&&POSTS[+m[1]]){openPost(+m[1]);}}
+  deepLink();
+  /* pull shared journal posts from Supabase (live on every device) */
+  if(window.OasisSync){OasisSync.get('posts').then(function(p){
+    if(p&&p.length){POSTS=p;try{localStorage.setItem('oasis_posts',JSON.stringify(p));}catch(e){}renderBlog();deepLink();}
+  });}
 </script>
 </body>
 </html>

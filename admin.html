@@ -111,7 +111,7 @@
     <div class="panel on" id="p-update">
       <div class="pcard">
         <h2>Practice details</h2>
-        <div class="sub">Edits here update the public website on this device instantly.</div>
+        <div class="sub">Edits here update the public website — live on every device within seconds of saving.</div>
         <div class="row2">
           <div class="field"><label>Provider name</label><input id="f_providerName"></div>
           <div class="field"><label>Short name (photo caption)</label><input id="f_shortName"></div>
@@ -139,7 +139,7 @@
     <div class="panel" id="p-journal">
       <div class="pcard">
         <h2>The Journal</h2>
-        <div class="sub">Edit, add, or remove blog posts. Changes appear on your Journal page (on this device). <b>Body</b> accepts simple HTML like &lt;p&gt;…&lt;/p&gt; and &lt;h4&gt;…&lt;/h4&gt;.</div>
+        <div class="sub">Edit, add, or remove blog posts, then click <b>Save journal</b> to publish — live on every device. <b>Body</b> accepts simple HTML like &lt;p&gt;…&lt;/p&gt; and &lt;h4&gt;…&lt;/h4&gt;.</div>
         <div id="postList"></div>
         <div style="margin-top:6px"><button class="btn ghost" onclick="addPost()">+ Add post</button> <button class="btn gold" onclick="savePosts()">Save journal</button> <button class="btn ghost" onclick="resetPosts()">Reset to defaults</button></div>
       </div>
@@ -208,8 +208,12 @@
 
   /* ---- login ---- */
   function login(){var v=document.getElementById('pass').value;if(v===passHash()){document.getElementById('gate').style.display='none';document.getElementById('app').style.display='block';loadAll();
-    /* pull the live shared config so the form shows what every visitor sees */
-    if(window.OasisSync){OasisSync.getConfig().then(function(remote){if(remote&&typeof remote==='object'){var c=Object.assign(getCfg(),remote);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}loadAll();}});}
+    /* pull the live shared content so the admin shows what every visitor sees */
+    if(window.OasisSync){
+      OasisSync.getConfig().then(function(remote){if(remote&&typeof remote==='object'){var c=Object.assign(getCfg(),remote);try{localStorage.setItem('oasis_cfg',JSON.stringify(c));}catch(e){}loadAll();}});
+      OasisSync.get('posts').then(function(p){if(p&&p.length){try{localStorage.setItem('oasis_posts',JSON.stringify(p));}catch(e){}renderPosts();}});
+      OasisSync.get('flyers').then(function(f){if(f){try{localStorage.setItem('oasis_flyers',JSON.stringify(f));}catch(e){}renderFlyers();}});
+    }
   }else{toast('Incorrect passcode');}}
   function logout(){document.getElementById('app').style.display='none';document.getElementById('gate').style.display='flex';document.getElementById('pass').value='';}
   function changePass(){if(document.getElementById('curPass').value!==passHash()){toast('Current passcode is wrong');return;}var n=document.getElementById('newPass').value.trim();if(n.length<4){toast('Use at least 4 characters');return;}localStorage.setItem('oasis_pass',n);document.getElementById('curPass').value='';document.getElementById('newPass').value='';toast('Passcode updated');}
@@ -330,9 +334,11 @@
     }).join('');
   }
   function toggleEdit(i){var e=document.getElementById('flyed'+i);e.style.display=(e.style.display==='none')?'block':'none';}
+  var _flyT;
   function flyerEdit(i,field,val){var arr=[];try{arr=JSON.parse(localStorage.getItem('oasis_flyers')||'[]');}catch(e){}arr[i]=arr[i]||{};arr[i][field]=val;localStorage.setItem('oasis_flyers',JSON.stringify(arr));
-    var map={script:'flys',h:'flyh',p:'flyp',cta:'flyc'};var el=document.getElementById(map[field]+i);if(el)el.textContent=val;}
-  function resetFlyers(){if(confirm('Reset all flyers to the default text?')){localStorage.removeItem('oasis_flyers');renderFlyers();toast('Flyers reset');}}
+    var map={script:'flys',h:'flyh',p:'flyp',cta:'flyc'};var el=document.getElementById(map[field]+i);if(el)el.textContent=val;
+    if(window.OasisSync){clearTimeout(_flyT);_flyT=setTimeout(function(){OasisSync.set('flyers',arr).then(function(ok){toast(ok?'Flyers synced to every device':'Saved on this device');});},800);}}
+  function resetFlyers(){if(confirm('Reset all flyers to the default text?')){localStorage.removeItem('oasis_flyers');if(window.OasisSync)OasisSync.set('flyers',[]);renderFlyers();toast('Flyers reset — live on every device');}}
 
   /* ---- journal editor ---- */
   var DEFAULT_POSTS=[
@@ -358,8 +364,10 @@
   function collectPosts(){var P=getPosts(),out=[];for(var i=0;i<P.length;i++){var cat=document.getElementById('pt_cat'+i);if(!cat)continue;out.push({cat:cat.value.trim(),ic:document.getElementById('pt_ic'+i).value.trim(),t:document.getElementById('pt_t'+i).value.trim(),ex:document.getElementById('pt_ex'+i).value.trim(),body:document.getElementById('pt_body'+i).value});}return out;}
   function addPost(){var P=collectPosts();P.push({cat:'New',ic:'📝',t:'New article title',ex:'A short summary of the article.',body:'<p>Write your article here. Use &lt;h4&gt; for subheadings and &lt;p&gt; for paragraphs.</p>'});localStorage.setItem('oasis_posts',JSON.stringify(P));renderPosts();toast('Post added');}
   function delPost(i){var P=collectPosts();P.splice(i,1);localStorage.setItem('oasis_posts',JSON.stringify(P));renderPosts();toast('Post deleted');}
-  function savePosts(){localStorage.setItem('oasis_posts',JSON.stringify(collectPosts()));toast('Journal saved — your Journal page is updated');}
-  function resetPosts(){if(confirm('Reset the journal to the default articles?')){localStorage.removeItem('oasis_posts');renderPosts();toast('Journal reset');}}
+  function savePosts(){var P=collectPosts();localStorage.setItem('oasis_posts',JSON.stringify(P));
+    if(window.OasisSync){toast('Publishing journal…');OasisSync.set('posts',P).then(function(ok){toast(ok?'Journal saved — live on every device':'Saved on this device (sync failed)');});}
+    else{toast('Journal saved');}}
+  function resetPosts(){if(confirm('Reset the journal to the default articles?')){localStorage.removeItem('oasis_posts');if(window.OasisSync)OasisSync.set('posts',DEFAULT_POSTS);renderPosts();toast('Journal reset — live on every device');}}
   function dlFlyer(i){var el=document.getElementById('fly'+i);toast('Rendering flyer…');
     html2canvas(el,{scale:3,backgroundColor:null,useCORS:true}).then(function(canvas){
       var a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download='oasis-flyer-'+(i+1)+'.png';document.body.appendChild(a);a.click();a.remove();toast('Flyer downloaded');
