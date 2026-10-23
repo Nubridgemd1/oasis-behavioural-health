@@ -200,7 +200,7 @@
 <script>
   /* ---- config (shared with public site via Supabase + localStorage cache) ---- */
   var DEFAULTS={providerName:'Lynda Chinyere Agbai, APRN, PMHNP-BC',shortName:'Lynda Agbai, PMHNP-BC',phone:'(346) 253-3485',
-    email:'hello@oasisbehaviouralhealth.com',ptLink:'https://www.psychologytoday.com/profile/1760882',paymentLink:'',bookingEndpoint:'',
+    email:'hello@oasisbhcare.com',ptLink:'https://www.psychologytoday.com/profile/1760882',paymentLink:'',bookingEndpoint:'',
     bio:'Evidence-based online psychiatry and medication management with a warm, nonjudgmental space for anxiety, depression, ADHD, trauma, and mood disorders. Serving clients across Texas.',
     insurers:[]};
   function getCfg(){var c=Object.assign({},DEFAULTS);try{c=Object.assign(c,JSON.parse(localStorage.getItem('oasis_cfg')||'{}'));}catch(e){}return c;}
@@ -320,7 +320,7 @@
       return '<div class="flyer-wrap"><div class="flyer" id="fly'+i+'" style="background:'+f.bg+'"><div class="inner">'+
         '<div><div class="fscript" id="flys'+i+'">'+esc(f.script)+'</div><div class="fbrand">Oasis Behavioral Health</div></div>'+
         '<div class="fmid"><div class="ficon">'+f.ic+'</div><h3 id="flyh'+i+'">'+esc(f.h)+'</h3><p id="flyp'+i+'">'+esc(f.p)+'</p><span class="fcta" id="flyc'+i+'">'+esc(f.cta)+'</span></div>'+
-        '<div class="ffoot">'+esc(c.phone)+' &nbsp;·&nbsp; oasisbehaviouralhealth.com</div>'+
+        '<div class="ffoot">'+esc(c.phone)+' &nbsp;·&nbsp; oasisbhcare.com</div>'+
         '</div></div>'+
         '<div class="flyer-actions"><button class="btn gold sm" onclick="dlFlyer('+i+')">⬇ Download</button>'+
         '<button class="btn ghost sm" onclick="shareFlyer('+i+')">Share</button>'+
@@ -398,7 +398,7 @@
   function clearBookings(){if(confirm('Clear all stored booking requests?')){localStorage.removeItem('oasis_bookings');renderBookings();}}
 
   /* ---- util ---- */
-  function siteUrl(){return 'https://oasisbehaviouralhealth.com';}
+  function siteUrl(){return 'https://oasisbhcare.com';}
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   var tT;function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){t.classList.remove('show');},2400);}
 </script>
